@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this database, please cite it as below. See citation.html on the site for per-variant citation guidance."
+title: "Blood Group Non-Coding Variant Database"
+authors:
+  - family-names: "Liu"
+    given-names: "Jun"
+date-released: 2026-01-01
+url: "https://example.org/REPLACE-WITH-DATABASE-URL"
+repository-code: "https://example.org/REPLACE-WITH-REPO-URL"
+type: dataset
+keywords:
+  - blood group antigens
+  - ABO
+  - Rh
+  - RHD
+  - RHCE
+  - Duffy
+  - ACKR1
+  - Kell
+  - KEL
+  - Kidd
+  - SLC14A1
+  - MNS
+  - non-coding variants
+  - base editing
+abstract: >
+  A curated database of non-coding and regulatory variants across six ISBT
+  human blood group systems (ABO, RH, MNS, KEL, FY/Duffy, JK/Kidd; genes ABO,
+  RHD, RHCE, GYPA, GYPB, KEL, ACKR1, SLC14A1), compiled from primary
+  literature, ISBT allele tables, and RhesusBase, annotated with gnomAD/TOPMed
+  population frequencies, validation evidence tiers, and CRISPR base-editing
+  (BE4max/ABE8e) feasibility.

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methods & Data Provenance: Blood Group Variant Database</title>
+<meta name="description" content="How the Blood Group Non-Coding Variant Database was compiled: scope, evidence tiers, audit process, and base-editing feasibility scoring.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">bg</span>
+      <span class="brand-text">Blood Group Variant Database<small>Chai Lab · Brigham and Women's Hospital</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Browse</a>
+      <a href="stats.html">Statistics</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="methods.html" aria-current="page">Methods</a>
+      <a href="citation.html">Citation</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+      </button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Browse</a>
+    <a href="stats.html">Statistics</a>
+    <a href="downloads.html">Downloads</a>
+    <a href="methods.html" aria-current="page">Methods</a>
+    <a href="citation.html">Citation</a>
+    <a href="about.html">About</a>
+  </div>
+</nav>
+
+<main class="content-page">
+  <div class="wrap">
+    <div class="page-head">
+      <h1>Methods &amp; data provenance</h1>
+      <p class="lede">What this database covers, how each entry was compiled and checked, and what the evidence and audit labels mean.</p>
+    </div>
+
+    <section id="scope">
+      <h2>Scope</h2>
+      <div class="prose">
+        <p>This database catalogs <strong>non-coding and regulatory</strong> variants (promoter, 5&prime;/3&prime; UTR, splice-site, intronic, and structural) reported to influence expression or splicing of six ISBT blood group systems: ABO (001), MNS (002), RH (004), KEL (006), FY/Duffy (008), and JK/Kidd (009). RH and KEL are each browsable here by their component genes or antigen groupings, for guide-design convenience: RHD and RHCE (two genes within RH), and the Kp<sup>a</sup>/Kp<sup>b</sup> and Js<sup>a</sup>/Js<sup>b</sup> antigen pairs (within KEL, alongside K/k).</p>
+        <p>It deliberately excludes common coding-region SNPs that define the classical serological alleles (e.g. the ABO exon 6/7 substitutions) except where a coding variant co-segregates with a regulatory allele background relevant to a listed entry. The intent is to surface the variant classes most useful for guide-design work in genome and base editing, where the accessible target space is often outside the coding sequence.</p>
+      </div>
+    </section>
+
+    <section id="provenance">
+      <h2>Data provenance</h2>
+      <div class="prose">
+        <p>Entries were compiled by <strong>Jun Liu, MD, PhD</strong> (Chai Lab, Brigham and Women's Hospital / Harvard Medical School) from three source types:</p>
+        <ul>
+          <li><strong>Primary literature:</strong> <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener">PubMed</a>-indexed case reports, functional studies (reporter assays, minigene splicing assays), and population surveys describing a specific variant's effect on antigen expression. Each record links directly to its source article (see its detail view).</li>
+          <li><strong>ISBT allele tables:</strong> the <a href="https://blooddatabase.isbtweb.org/" target="_blank" rel="noopener">ISBT Blood Group Database</a>, maintained by the International Society of Blood Transfusion Working Party for Red Cell Immunogenetics and Blood Group Terminology, used for system/allele naming and cross-checking allele backgrounds.</li>
+          <li><strong>RhesusBase</strong> (<a href="http://www.rhesusbase.info" target="_blank" rel="noopener">rhesusbase.info</a>), for RHD/RHCE allele and haplotype cross-referencing.</li>
+        </ul>
+        <p>Population allele frequencies are pulled from <a href="https://gnomad.broadinstitute.org/" target="_blank" rel="noopener"><strong>gnomAD v4</strong></a> and <a href="https://topmed.nhlbi.nih.gov/" target="_blank" rel="noopener"><strong>TOPMed</strong></a> where the variant is represented in those callsets; many rare or structural variants are not, and are marked "N/A" rather than assumed absent. Each record with a gnomAD-represented variant links to its specific gnomAD entry (see its detail view).</p>
+      </div>
+    </section>
+
+    <section id="field-definitions">
+      <h2>Field definitions</h2>
+      <div class="prose">
+        <p>The columns in the <a href="downloads.html">CSV/JSON download</a> and the variant detail drawer, grouped by section. Fields not listed here are self-explanatory (e.g. <code>gene</code>, <code>chromosome</code>) or already defined below (validation tier, audit status, base-editing feasibility).</p>
+      </div>
+      <div class="card">
+        <div class="legend-grid" style="grid-template-columns: 1fr;">
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">allele_background</span><span>The ISBT allele context the variant occurs on (e.g. B.01, RHCE*Ce), when reported by the source study.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">isbt_allele_designation</span><span>The full ISBT allele name assigned to this variant itself, when ISBT has issued one. Distinct from <code>allele_background</code>, which describes the surrounding haplotype rather than the variant's own designation.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">phenotype</span><span>The reported red-cell antigen phenotype (e.g. Fy(a&minus;b&minus;), Ko). Where a study reports a functional or expression-magnitude effect instead of a discrete antigen phenotype, that effect description is used here and is not a formal phenotype designation.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">alternative_notation</span><span>Legacy or alternate variant nomenclature (e.g. older IVS-based intron numbering) for the same variant. Does not contain curation notes.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">region</span><span>The genomic feature the variant falls in (promoter, 5&prime;/3&prime; UTR, splice site, intron, or structural element).</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">mutation_type</span><span>SNV, small insertion/deletion, or structural-variant class.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">molecular_mechanism</span><span>A prose summary of how the variant is reported to affect expression or splicing. Curatorial audit notes, when present, are appended in brackets, e.g. <code>[AUDIT NOTE: ...]</code>.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">population</span><span>The population(s) the variant or its frequency estimate was reported in by the source study, when specified.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">bystander_edits</span><span>Whether other editable bases fall within the same base-editing window as the target substitution, when assessed.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Validation tier legend</h2>
+      <p>Each entry's evidence is bucketed into one of five tiers for filtering. The original, more granular wording is preserved in each variant's detail record. Source studies and prior compilations describe evidence strength in inconsistent terms (e.g. "Strong"/"Moderate"/"Inferred" in some entries, named assay types in others); these free-text labels are algorithmically mapped into the five tiers below rather than drawn from a single controlled vocabulary.</p>
+      <div class="card">
+        <div class="legend-grid">
+          <div class="legend-row"><span class="badge badge-good">Clinical / Serological</span><span>Variant confirmed against patient serology, clinical genotyping, or in vivo phenotype.</span></div>
+          <div class="legend-row"><span class="badge badge-mid">Functional / Cell culture</span><span>Effect demonstrated in a reporter, minigene, or cell-line expression assay, without direct clinical confirmation.</span></div>
+          <div class="legend-row"><span class="badge badge-low">Database only</span><span>Present in ISBT/RhesusBase allele tables without an accompanying functional or clinical study cited.</span></div>
+          <div class="legend-row"><span class="badge badge-low">In silico / unvalidated</span><span>Predicted regulatory or splice effect (e.g. by a sequence model) with no wet-lab or clinical confirmation.</span></div>
+          <div class="legend-row"><span class="badge badge-low">Not characterized</span><span>Reported as an allele-defining variant without a described mechanism.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Audit status legend</h2>
+      <p>As part of ongoing curation, every entry is checked against its cited source. The audit label on each record reflects the outcome of that check, not the strength of the underlying biology.</p>
+      <div class="card">
+        <div class="legend-grid">
+          <div class="legend-row"><span class="badge badge-good">Verified</span><span>Reference, coordinates, and stated effect confirmed directly against the primary source.</span></div>
+          <div class="legend-row"><span class="badge badge-good">Likely valid</span><span>Consistent with the primary source on the fields checked; not yet independently re-derived.</span></div>
+          <div class="legend-row"><span class="badge badge-mid">Corrected</span><span>An error was found and fixed (a broken URL, a misattributed reference, an incorrect year). The correction is noted on the individual record.</span></div>
+          <div class="legend-row"><span class="badge badge-flag">Flagged</span><span>A discrepancy was found and not yet resolved (e.g. an unconfirmed PMID, an allele later removed from the ISBT table). Treat with caution until reviewed further.</span></div>
+          <div class="legend-row"><span class="badge badge-low">Unaudited</span><span>Not yet run through the reference-check pass.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Base-editing feasibility annotations</h2>
+      <div class="prose">
+        <p>Where relevant, each variant is annotated for feasibility with two common CRISPR base editors, evaluated against the reference/alternate allele in its genomic (not transcript) strand context:</p>
+        <ul>
+          <li><strong>BE4max:</strong> a cytosine base editor (C&rarr;T on the edited strand).</li>
+          <li><strong>ABE8e:</strong> an adenine base editor (A&rarr;G on the edited strand).</li>
+        </ul>
+        <p>A rating of <em>Feasible</em> or <em>Medium</em> means the substitution is chemically compatible with that editor in principle; it is <strong>not</strong> a validated guide design and does not account for PAM availability, bystander edits within the editing window, or off-target risk unless explicitly noted in the record's guide notes field. Deletions, insertions, and structural variants are marked not applicable, since base editors perform single-base substitutions only.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Update cadence</h2>
+      <div class="prose">
+        <p>Current data release: 2026-08-13. The dataset is reviewed quarterly for new publications relevant to the six covered systems. Between reviews, individual records may be corrected as discrepancies are found during use; see the <a href="changelog.html">Changelog</a> for the dated record of every correction.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <div class="prose">
+        <p>No standalone methods publication describes this resource at this time. Cite the database itself as described on the <a href="citation.html">Citation</a> page; cite individual variant findings against the original publications linked from each record's Key reference field.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Disclaimer</h2>
+      <div class="prose">
+        <p><strong>Research use only.</strong> This database is a literature-compilation resource intended to support research and assay/guide design. It is not a validated clinical genotyping tool, is not maintained under a clinical quality system, and must not be used alone to inform patient care, transfusion decisions, or genetic counseling. Always confirm findings against the primary literature and, for clinical questions, against an accredited reference laboratory.</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>About this resource</h4>
+        <p>A research catalog of non-coding and regulatory blood group variants, compiled for the study of variant-guided base editing strategies for antigen modulation. Not a clinical or diagnostic tool.</p>
+      </div>
+      <div>
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Browse variants</a></li>
+          <li><a href="stats.html">Statistics</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="methods.html">Methods &amp; validation legend</a></li>
+          <li><a href="citation.html">Citation</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Jun Liu, MD, PhD</li>
+          <li>Chai Lab, Department of Pathology</li>
+          <li>Brigham and Women's Hospital / Harvard Medical School</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="site-year"></span> Chai Lab, Brigham and Women's Hospital. Data compiled by Jun Liu, MD, PhD.</span>
+      <span><a href="citation.html">How to cite</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Generated single-file demo bundle (inlines CSS/JS/data; rebuild with
+# scripts/build_demo.py rather than committing this multi-hundred-KB artifact).
+demo/
+
+# Zipped copy of the site for emailing; regenerate from the current files
+# rather than committing it (it'll go stale the moment the site changes).
+blood-group-variant-database-demo.zip
+
+# Python bytecode cache from running the scripts/ helpers.
+__pycache__/
+*.pyc
