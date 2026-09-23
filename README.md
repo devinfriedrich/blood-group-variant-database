@@ -17,15 +17,13 @@ MD, PhD**.
 - `stats.html`: dataset statistics (coverage by system, category, evidence
   tier, audit status, base-editing feasibility), computed live from the same
   data the browser reads.
-- `downloads.html`: CSV and JSON download of the full dataset, with schema
-  documentation.
+- `download-cite.html`: CSV and JSON download of the full dataset, with schema
+  documentation, plus how to cite the database and individual variant entries.
 - `methods.html`: scope, data provenance, evidence-tier and audit-status
   legends, base-editing feasibility methodology, disclaimer.
-- `citation.html`: how to cite the database and individual variant entries.
 - `about.html`: what this resource is for, who maintains it, contact.
 - `changelog.html`: dated log of data corrections and site changes
-  (linked from the footer on every page, not the top nav, to keep the nav
-  short).
+  (linked from the top nav and footer on every page).
 
 **Code & data**
 - `assets/style.css`, `assets/app.js`: all styling and browser/stats/nav
@@ -78,9 +76,9 @@ BWH/Harvard-hosted web space. No build step required.
 ## Before this goes live
 
 - [ ] Decide on a permanent URL and update the `[database URL]` placeholders
-      in `citation.html` and `CITATION.cff`.
+      in `download-cite.html` and `CITATION.cff`.
 - [ ] Decide on a reuse license for the compiled dataset (see
-      `citation.html` → Usage & license) and update that section.
+      `download-cite.html` → Usage & license) and update that section.
 - [ ] Fill in `scripts/update_variants.py` if the quarterly auto-update
       workflow should actually run.
 - [ ] Resolve the 3 records still flagged from the full citation audit

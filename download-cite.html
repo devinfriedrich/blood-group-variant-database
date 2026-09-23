@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Citation: Blood Group Variant Database</title>
-<meta name="description" content="How to cite the Blood Group Non-Coding Variant Database and its individual variant entries.">
+<title>Download and Cite: Blood Group Variant Database</title>
+<meta name="description" content="Download the full Blood Group Non-Coding Variant Database as CSV or JSON, and how to cite it and its individual variant entries.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -18,9 +18,8 @@
     <div class="nav-links">
       <a href="index.html">Browse</a>
       <a href="stats.html">Statistics</a>
-      <a href="downloads.html">Downloads</a>
       <a href="methods.html">Methods</a>
-      <a href="citation.html" aria-current="page">Citation</a>
+      <a href="download-cite.html" aria-current="page">Download and Cite</a>
       <a href="about.html">About</a>
       <a href="changelog.html">Changelog</a>
     </div>
@@ -37,9 +36,8 @@
   <div class="nav-mobile" id="nav-mobile">
     <a href="index.html">Browse</a>
     <a href="stats.html">Statistics</a>
-    <a href="downloads.html">Downloads</a>
     <a href="methods.html">Methods</a>
-    <a href="citation.html" aria-current="page">Citation</a>
+    <a href="download-cite.html" aria-current="page">Download and Cite</a>
     <a href="about.html">About</a>
     <a href="changelog.html">Changelog</a>
   </div>
@@ -48,18 +46,46 @@
 <main class="content-page">
   <div class="wrap">
     <div class="page-head">
-      <h1>Citation</h1>
-      <p class="lede">How to credit this database, and how to credit the individual studies behind each variant.</p>
+      <h1>Download and Cite</h1>
     </div>
 
-    <section>
-      <h2>Citing the database</h2>
-      <div class="prose">
-        <p>If this resource informed your research, guide design, or analysis, please cite it as below. This credits the compilation effort; it does not replace citing the original studies for specific variants (see the next section).</p>
+    <section id="download">
+      <h2>Download</h2>
+      <p class="lede">The full dataset behind this browser, in two formats. Both are regenerated directly from the same source table, so they always match what you see on the <a href="index.html">Browse</a> page. Below the downloads: how to credit this database, and how to credit the individual studies behind each variant.</p>
+      <div class="grid-2">
+        <div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+          <h3 style="margin:0">CSV</h3>
+          <a class="btn btn-primary" href="data/variants.csv" download>Download CSV</a>
+        </div>
+        <div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+          <h3 style="margin:0">JSON</h3>
+          <a class="btn btn-primary" href="data/variants.json" download>Download JSON</a>
+        </div>
       </div>
+    </section>
 
-      <h3>Suggested citation</h3>
-      <p style="margin-bottom:8px">In NLM/Citing Medicine format, the convention used by NCBI resources such as ClinVar and dbSNP:</p>
+    <section id="schema">
+      <h2>Schema</h2>
+      <p class="mono" style="font-size:12.5px; color:var(--muted); margin-bottom:10px">Data release: 2026-08-13</p>
+      <p>Every record in both files shares this field set. Fields not applicable to a given variant (e.g. base-editing feasibility on a large deletion) are populated with <code>N/A</code> or left empty rather than omitted, so both files always have consistent columns.</p>
+      <div class="card">
+        <div class="code-block">system, system_label, gene, chromosome, strand, isbt_system_code,
+hgvs, phenotype, allele_background, region, variant_id,
+alternative_notation, variant_category, mutation_type,
+grch38_coordinate, dbsnp_rs, reference_allele, alternate_allele,
+isbt_allele_designation, molecular_mechanism, validation_level,
+validation_cell_line, population, gnomad_v4_af_global,
+gnomad_v4_af_afr, gnomad_v4_af_eur, topmed_af,
+be4max_feasibility, abe8e_feasibility, be_guide_sequence_notes,
+bystander_edits, first_report_year, key_reference,
+pubmed_source_url, audit_status, gnomad_url</div>
+      </div>
+      <p style="margin-top:14px">Every column is defined on the Methods page: general fields under <a href="methods.html#field-definitions">Field definitions</a>, and validation tiers, audit statuses, and base-editing feasibility ratings under their own named sections.</p>
+    </section>
+
+    <section id="cite">
+      <h2>Citations</h2>
+      <h3>NLM/Citing Medicine</h3>
       <div class="card">
         <div class="code-block" id="cite-text" style="font-family:var(--font-sans); white-space:normal;">Liu J. Blood Group Non-Coding Variant Database [Internet]. Boston (MA): Chai Lab, Department of Pathology, Brigham and Women's Hospital, Harvard Medical School; 2026 [cited YYYY Mon DD]. Available from: [database URL].</div>
         <button class="copy-btn" data-copy-target="cite-text">Copy citation</button>
@@ -79,7 +105,7 @@
       </div>
     </section>
 
-    <section>
+    <section id="cite-variant">
       <h2>Citing an individual variant entry</h2>
       <div class="prose">
         <p>Each variant's underlying finding, whether a case report, functional assay, or population survey, belongs to the researchers who published it. When you use a specific variant record, cite <strong>both</strong>:</p>
@@ -94,7 +120,7 @@
       </div>
     </section>
 
-    <section>
+    <section id="acknowledgments">
       <h2>Acknowledgments</h2>
       <div class="prose">
         <ul>
@@ -105,7 +131,7 @@
       </div>
     </section>
 
-    <section>
+    <section id="license">
       <h2>Usage &amp; license</h2>
       <div class="prose">
         <p>This resource is provided for academic and research use. A formal reuse license (e.g. CC BY 4.0) has not yet been assigned by the Chai Lab; until one is designated here, please contact the lab before redistributing the compiled dataset itself. Individual cited studies remain under their original publishers' copyright and licensing terms.</p>
@@ -126,9 +152,8 @@
         <ul>
           <li><a href="index.html">Browse variants</a></li>
           <li><a href="stats.html">Statistics</a></li>
-          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="download-cite.html">Download and Cite</a></li>
           <li><a href="methods.html">Methods &amp; Validation legend</a></li>
-          <li><a href="citation.html">Citation</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="changelog.html">Changelog</a></li>
         </ul>

@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this database, please cite it as below. See citation.html on the site for per-variant citation guidance."
+message: "If you use this database, please cite it as below. See download-cite.html on the site for per-variant citation guidance."
 title: "Blood Group Non-Coding Variant Database"
 authors:
   - family-names: "Liu"
