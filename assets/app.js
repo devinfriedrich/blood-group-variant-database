@@ -234,6 +234,12 @@
 
     // Populate category/validation-tier filter options from the actual data.
     var categories = Array.from(new Set(DATA.map(function (r) { return categoryBucket(r.variant_category); } ))).sort();
+    // List 5' UTR ahead of 3' UTR (gene order), not in plain alphabetical order.
+    var i5 = categories.indexOf("5' UTR"), i3 = categories.indexOf("3' UTR");
+    if (i5 > -1 && i3 > -1) { categories.splice(i5, 1); categories.splice(i3, 0, "5' UTR"); }
+    // Catch-all bucket goes last.
+    var iOther = categories.indexOf("Other / Unclassified");
+    if (iOther > -1) { categories.splice(iOther, 1); categories.push("Other / Unclassified"); }
     categories.forEach(function (c) {
       var opt = document.createElement("option");
       opt.value = c; opt.textContent = c;
