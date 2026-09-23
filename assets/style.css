@@ -101,6 +101,9 @@
 }
 
 html { color-scheme: light dark; }
+/* follow the manual theme toggle for native controls (checkboxes, scrollbars) */
+html[data-theme="light"] { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
 
 body {
   margin: 0;
@@ -259,7 +262,8 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .system-card .sys-count small { font-family: var(--font-sans); font-weight: 500; font-size: 11.5px; color: var(--muted); margin-left: 4px; }
 
 /* ---------- browser toolbar ---------- */
-.browser-shell { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+/* overflow stays visible so the filter dropdown panels aren't clipped */
+.browser-shell { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
 .toolbar { padding: 16px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
 
 .search-row { display: flex; gap: 10px; }
@@ -276,6 +280,35 @@ select {
   border: 1px solid var(--border-strong); background: var(--paper); color: var(--ink);
   border-radius: var(--radius-sm); padding: 8px 10px; font-size: 13.5px; font-family: var(--font-sans);
 }
+/* multi-select filter dropdowns (built by app.js from the <select> markup) */
+.ms { position: relative; }
+.ms-btn {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  border: 1px solid var(--border-strong); background: var(--paper); color: var(--ink);
+  border-radius: var(--radius-sm); padding: 8px 10px; font-size: 13.5px; font-family: var(--font-sans);
+}
+.ms-btn svg { width: 12px; height: 12px; color: var(--muted); transition: transform .15s; }
+.ms-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.ms.is-filtered .ms-btn { border-color: var(--accent); background: var(--accent-soft); }
+.ms-panel {
+  position: absolute; top: calc(100% + 4px); left: 0; z-index: 20;
+  min-width: 220px; max-width: calc(100vw - 32px); max-height: 420px; overflow-y: auto;
+  background: var(--surface-raised); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow-md); padding: 6px;
+}
+.ms-panel[hidden] { display: none; }
+.ms-opt {
+  display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 4px;
+  font-size: 13.5px; cursor: pointer; white-space: nowrap;
+}
+.ms-opt:hover { background: var(--code-bg); }
+.ms-opt input { accent-color: var(--accent); margin: 0; }
+.ms-panel-clear {
+  display: block; width: 100%; text-align: left; margin-top: 4px; padding: 7px 8px;
+  border: none; border-top: 1px solid var(--border); background: none;
+  font-size: 12.5px; color: var(--muted); cursor: pointer;
+}
+.ms-panel-clear:hover { color: var(--ink); }
 .filter-clear {
   font-size: 13px; color: var(--muted); background: none; border: none; cursor: pointer; padding: 6px 4px;
 }

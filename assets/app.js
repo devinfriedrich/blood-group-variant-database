@@ -97,6 +97,99 @@
     return n.toExponential(2).replace("e-", "×10⁻").replace("+", "");
   }
 
+  /* ---------------- multi-select dropdown ---------------- */
+  // Replaces a <select> with a checkbox dropdown. The select's first option
+  // ("All systems", etc.) is the empty-selection label; the rest become
+  // checkboxes. An empty selection means "no filter".
+  var openMultiSelects = [];
+
+  function multiSelect(selectEl, onChange) {
+    var opts = Array.from(selectEl.options);
+    var allLabel = opts[0].textContent;
+    var noun = allLabel.replace(/^All\s+/i, "");
+    var choices = opts.slice(1).map(function (o) { return { value: o.value, label: o.textContent }; });
+    var ariaLabel = selectEl.getAttribute("aria-label") || allLabel;
+
+    var root = document.createElement("div");
+    root.className = "ms";
+    root.id = selectEl.id;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "ms-btn";
+    btn.setAttribute("aria-haspopup", "true");
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-label", ariaLabel);
+    var btnText = document.createElement("span");
+    btn.appendChild(btnText);
+    btn.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>');
+
+    var panel = document.createElement("div");
+    panel.className = "ms-panel";
+    panel.setAttribute("role", "group");
+    panel.setAttribute("aria-label", ariaLabel);
+    panel.hidden = true;
+    var boxes = choices.map(function (c) {
+      var lab = document.createElement("label");
+      lab.className = "ms-opt";
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.value = c.value;
+      cb.addEventListener("change", function () { update(); onChange(); });
+      lab.appendChild(cb);
+      lab.appendChild(document.createTextNode(c.label));
+      panel.appendChild(lab);
+      return cb;
+    });
+    var clearBtn = document.createElement("button");
+    clearBtn.type = "button";
+    clearBtn.className = "ms-panel-clear";
+    clearBtn.textContent = "Clear selection";
+    clearBtn.addEventListener("click", function () { api.set([]); onChange(); });
+    panel.appendChild(clearBtn);
+
+    root.appendChild(btn);
+    root.appendChild(panel);
+    selectEl.parentNode.replaceChild(root, selectEl);
+
+    function update() {
+      var picked = choices.filter(function (c, i) { return boxes[i].checked; });
+      btnText.textContent = picked.length === 0 ? allLabel
+        : picked.length === 1 ? picked[0].label
+        : picked.length + " " + noun;
+      root.classList.toggle("is-filtered", picked.length > 0);
+      clearBtn.hidden = picked.length === 0;
+    }
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (!open) return;
+      // On narrow screens, shift the panel left so it doesn't run off the viewport.
+      panel.style.left = "";
+      var overflow = panel.getBoundingClientRect().right - (document.documentElement.clientWidth - 16);
+      if (overflow > 0) panel.style.left = -overflow + "px";
+    }
+
+    btn.addEventListener("click", function () {
+      var open = panel.hidden;
+      openMultiSelects.forEach(function (m) { m.close(); });
+      setOpen(open);
+    });
+    document.addEventListener("click", function (e) { if (!root.contains(e.target)) setOpen(false); });
+    root.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !panel.hidden) { e.stopPropagation(); setOpen(false); btn.focus(); }
+    });
+
+    var api = {
+      get: function () { return boxes.filter(function (b) { return b.checked; }).map(function (b) { return b.value; }); },
+      set: function (values) { boxes.forEach(function (b) { b.checked = values.indexOf(b.value) > -1; }); update(); },
+      close: function () { setOpen(false); },
+    };
+    openMultiSelects.push(api);
+    update();
+    return api;
+  }
+
   /* ---------------- browser state / render ---------------- */
   function initBrowser() {
     var table = document.getElementById("variant-tbody");
@@ -105,10 +198,11 @@
     var DATA = window.VARIANT_DATA || [];
     var state = {
       q: "",
-      system: "",
-      category: "",
-      validation: "",
-      audit: "",
+      // multi-select filters: an empty array means "all"
+      system: [],
+      category: [],
+      validation: [],
+      audit: [],
       sortKey: "variant_id",
       sortDir: 1,
       page: 1,
@@ -146,11 +240,28 @@
       els.categorySel.appendChild(opt);
     });
 
+    function onFilterChange() {
+      state.system = els.systemSel.get();
+      state.category = els.categorySel.get();
+      state.validation = els.validationSel.get();
+      state.audit = els.auditSel.get();
+      state.page = 1;
+      render();
+    }
+    els.systemSel = multiSelect(els.systemSel, onFilterChange);
+    els.categorySel = multiSelect(els.categorySel, onFilterChange);
+    els.validationSel = multiSelect(els.validationSel, onFilterChange);
+    els.auditSel = multiSelect(els.auditSel, onFilterChange);
+
+    function inSet(selected, value) {
+      return selected.length === 0 || selected.indexOf(value) > -1;
+    }
+
     function matches(r) {
-      if (state.system && r.system !== state.system) return false;
-      if (state.category && categoryBucket(r.variant_category) !== state.category) return false;
-      if (state.validation && validationTier(r.validation_level).label !== state.validation) return false;
-      if (state.audit && auditTier(r.audit_status).label !== state.audit) return false;
+      if (!inSet(state.system, r.system)) return false;
+      if (!inSet(state.category, categoryBucket(r.variant_category))) return false;
+      if (!inSet(state.validation, validationTier(r.validation_level).label)) return false;
+      if (!inSet(state.audit, auditTier(r.audit_status).label)) return false;
       if (state.q) {
         var hay = [r.variant_id, r.gene, r.hgvs, r.alternative_notation, r.phenotype, r.dbsnp_rs, r.allele_background, r.key_reference]
           .join(" ").toLowerCase();
@@ -221,19 +332,15 @@
       });
 
       els.systemCards.forEach(function (card) {
-        card.classList.toggle("is-active", card.dataset.systemCard === state.system);
+        card.classList.toggle("is-active", state.system.indexOf(card.dataset.systemCard) > -1);
       });
     }
 
     els.search.addEventListener("input", function () { state.q = this.value; state.page = 1; render(); });
-    els.systemSel.addEventListener("change", function () { state.system = this.value; state.page = 1; render(); });
-    els.categorySel.addEventListener("change", function () { state.category = this.value; state.page = 1; render(); });
-    els.validationSel.addEventListener("change", function () { state.validation = this.value; state.page = 1; render(); });
-    els.auditSel.addEventListener("change", function () { state.audit = this.value; state.page = 1; render(); });
     els.clear.addEventListener("click", function () {
-      state.q = ""; state.system = ""; state.category = ""; state.validation = ""; state.audit = ""; state.page = 1;
-      els.search.value = ""; els.systemSel.value = ""; els.categorySel.value = ""; els.validationSel.value = ""; els.auditSel.value = "";
-      render();
+      state.q = ""; els.search.value = "";
+      [els.systemSel, els.categorySel, els.validationSel, els.auditSel].forEach(function (m) { m.set([]); });
+      onFilterChange();
     });
     els.pagerPrev.addEventListener("click", function () { if (state.page > 1) { state.page--; render(); window.scrollTo({ top: document.getElementById("browse").offsetTop - 80, behavior: "smooth" }); } });
     els.pagerNext.addEventListener("click", function () { state.page++; render(); window.scrollTo({ top: document.getElementById("browse").offsetTop - 80, behavior: "smooth" }); });
@@ -248,10 +355,12 @@
 
     els.systemCards.forEach(function (card) {
       card.addEventListener("click", function () {
-        state.system = state.system === card.dataset.systemCard ? "" : card.dataset.systemCard;
-        els.systemSel.value = state.system;
-        state.page = 1;
-        render();
+        // Card click shows just that system; clicking it again when it's the
+        // only one selected clears the system filter.
+        var sys = card.dataset.systemCard;
+        var only = state.system.length === 1 && state.system[0] === sys;
+        els.systemSel.set(only ? [] : [sys]);
+        onFilterChange();
         document.getElementById("browse").scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
@@ -351,9 +460,8 @@
     // Deep-link support: ?system=RHD or #RHD-NC-004
     var params = new URLSearchParams(window.location.search);
     if (params.get("system")) {
-      state.system = params.get("system");
-      els.systemSel.value = state.system;
-      render();
+      els.systemSel.set(params.get("system").split(","));
+      onFilterChange();
     }
     if (window.location.hash) {
       var wanted = window.location.hash.replace("#", "");
