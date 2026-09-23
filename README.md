@@ -1,6 +1,6 @@
 # Blood Group Non-Coding Variant Database
 
-A static, searchable website cataloging **229 non-coding and regulatory
+A static, searchable website cataloging **217 non-coding and regulatory
 variants** across 8 blood group systems: ABO, RHD, RHCE, Duffy (ACKR1),
 Kell (KEL), Kidd (SLC14A1), MNS (GYPA/GYPB), and Kell Other Antigens
 (Kp<sup>a</sup>/Kp<sup>b</sup>, Js<sup>a</sup>/Js<sup>b</sup>).
