@@ -205,8 +205,6 @@
       audit: [],
       sortKey: "variant_id",
       sortDir: 1,
-      page: 1,
-      perPage: 25,
     };
 
     var systems = [];
@@ -224,10 +222,7 @@
       count: document.getElementById("result-count"),
       tbody: table,
       empty: document.getElementById("empty-state"),
-      pager: document.getElementById("pager"),
-      pagerLabel: document.getElementById("pager-label"),
-      pagerPrev: document.getElementById("pager-prev"),
-      pagerNext: document.getElementById("pager-next"),
+      tableScroll: document.querySelector(".table-scroll"),
       systemCards: document.querySelectorAll("[data-system-card]"),
       sortButtons: document.querySelectorAll("[data-sort]"),
     };
@@ -251,7 +246,6 @@
       state.category = els.categorySel.get();
       state.validation = els.validationSel.get();
       state.audit = els.auditSel.get();
-      state.page = 1;
       render();
     }
     els.systemSel = multiSelect(els.systemSel, onFilterChange);
@@ -291,21 +285,17 @@
       });
 
       var total = filtered.length;
-      var totalPages = Math.max(1, Math.ceil(total / state.perPage));
-      if (state.page > totalPages) state.page = totalPages;
-      var start = (state.page - 1) * state.perPage;
-      var pageItems = filtered.slice(start, start + state.perPage);
 
       els.count.textContent = total.toLocaleString() + (total === 1 ? " variant" : " variants");
 
       els.tbody.innerHTML = "";
-      if (pageItems.length === 0) {
+      if (total === 0) {
         els.empty.style.display = "block";
         els.tbody.parentElement.parentElement.style.display = "none";
       } else {
         els.empty.style.display = "none";
         els.tbody.parentElement.parentElement.style.display = "";
-        pageItems.forEach(function (r) {
+        filtered.forEach(function (r) {
           var val = validationTier(r.validation_level);
           var aud = auditTier(r.audit_status);
           var tr = document.createElement("tr");
@@ -327,9 +317,8 @@
         });
       }
 
-      els.pagerLabel.textContent = total === 0 ? "No results" : ("Page " + state.page + " of " + totalPages);
-      els.pagerPrev.disabled = state.page <= 1;
-      els.pagerNext.disabled = state.page >= totalPages;
+      // new filter/sort results start from the top of the scrollable table
+      els.tableScroll.scrollTop = 0;
 
       els.sortButtons.forEach(function (b) {
         var arrow = b.querySelector(".sort-arrow");
@@ -342,14 +331,12 @@
       });
     }
 
-    els.search.addEventListener("input", function () { state.q = this.value; state.page = 1; render(); });
+    els.search.addEventListener("input", function () { state.q = this.value; render(); });
     els.clear.addEventListener("click", function () {
       state.q = ""; els.search.value = "";
       [els.systemSel, els.categorySel, els.validationSel, els.auditSel].forEach(function (m) { m.set([]); });
       onFilterChange();
     });
-    els.pagerPrev.addEventListener("click", function () { if (state.page > 1) { state.page--; render(); window.scrollTo({ top: document.getElementById("browse").offsetTop - 80, behavior: "smooth" }); } });
-    els.pagerNext.addEventListener("click", function () { state.page++; render(); window.scrollTo({ top: document.getElementById("browse").offsetTop - 80, behavior: "smooth" }); });
 
     els.sortButtons.forEach(function (btn) {
       btn.addEventListener("click", function () {
