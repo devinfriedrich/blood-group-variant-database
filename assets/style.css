@@ -214,8 +214,9 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
   background: var(--accent-soft); border: 1px solid var(--accent-soft-border);
   padding: 4px 10px; border-radius: 999px; margin-bottom: 16px;
 }
-.hero h1 { font-size: clamp(28px, 3.6vw, 42px); max-width: 18ch; }
+.hero h1 { font-size: clamp(28px, 3.6vw, 42px); max-width: 24ch; }
 .hero .lede { font-size: 16.5px; color: var(--ink-soft); }
+.hero-grid > div:first-child > :last-child { margin-bottom: 0; }
 .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
 
 .btn {
@@ -237,9 +238,18 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .stat-num { font-family: var(--font-mono); font-size: 26px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
 .stat-label { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 .stat-panel .stat-foot { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--muted); }
+/* home hero panel: stretch to the bottom of the hero text, stats spread to fill it */
+.hero .stat-panel {
+  align-self: stretch; display: flex; flex-direction: column; gap: 20px; padding: 28px;
+}
+.hero .stat-grid { flex: 1; align-content: space-evenly; gap: 24px 28px; }
+.hero .stat-num { font-size: 36px; }
+.hero .stat-label { font-size: 14px; margin-top: 4px; }
+.hero .stat-panel .stat-foot { margin-top: 0; padding-top: 16px; font-size: 13.5px; }
 
 /* ---------- section shell ---------- */
 .section { padding: 44px 0; }
+.section + .section { padding-top: 0; }
 .section-head { margin-bottom: 22px; }
 .section-head h2 { font-size: 22px; }
 
@@ -389,10 +399,11 @@ table.variant-table { width: 100%; border-collapse: collapse; font-size: 13.5px;
 .link-row a { font-size: 13.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
 
 /* ---------- generic content pages (about / citation) ---------- */
-.content-page { padding: 48px 0 80px; }
+.content-page { padding: 48px 0 36px; }
 .content-page .page-head { margin-bottom: 36px; }
 .content-page .page-head h1 { font-size: 30px; }
 .content-page section { margin-bottom: 34px; }
+.content-page section:last-child { margin-bottom: 0; }
 .content-page section h2 { font-size: 19px; margin-bottom: 12px; }
 .content-page section h3 { font-size: 15px; margin: 18px 0 8px; }
 .content-page .prose ul, .content-page .prose ol { color: var(--ink-soft); padding-left: 22px; margin: 0 0 1em; }
