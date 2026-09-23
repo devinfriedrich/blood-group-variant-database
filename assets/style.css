@@ -195,7 +195,7 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 .nav-mobile a[aria-current="page"] { color: var(--accent); }
 .nav-mobile a:hover { color: var(--ink); text-decoration: none; }
 
-@media (max-width: 760px) {
+@media (max-width: 1040px) {
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
   .site-nav.is-open .nav-mobile { display: flex; }
