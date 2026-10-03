@@ -9,7 +9,6 @@ one URL, so real multi-page navigation isn't possible there).
 Run from scripts/: python3 build_demo.py
 Output: ../demo/demo.html (gitignored; not part of the deployable site)
 """
-import base64
 import re
 from pathlib import Path
 
@@ -48,12 +47,12 @@ for page in PAGES:
     # Drop the drawer markup from the page body if present (it's hoisted once, globally)
     page_body = re.sub(r'<div class="drawer-overlay".*?</aside>', "", page_body, flags=re.DOTALL)
     if page == "download-cite":
-        csv_b64 = base64.b64encode((ROOT / "data" / "variants.csv").read_bytes()).decode()
-        json_b64 = base64.b64encode((ROOT / "data" / "variants.json").read_bytes()).decode()
-        for old, new in (('href="data/variants.csv"', f'href="data:text/csv;base64,{csv_b64}"'),
-                         ('href="data/variants.json"', f'href="data:application/json;base64,{json_b64}"')):
-            assert old in page_body, f"download link {old} not found on download-cite.html"
-            page_body = page_body.replace(old, new)
+        # The shared preview is viewed inside a sandbox that never allows file downloads,
+        # so a download button there would silently do nothing. Say so instead.
+        for label, href in (("Download CSV", "data/variants.csv"), ("Download JSON", "data/variants.json")):
+            btn = f'<a class="btn btn-primary" href="{href}" download>{label}</a>'
+            assert btn in page_body, f"{label} button not found on download-cite.html"
+            page_body = page_body.replace(btn, '<span class="demo-note">Downloads are turned off in this preview. They work in the full site.</span>')
 
     display = "block" if page == "index" else "none"
     page_sections.append(f'<div class="demo-page" data-page="{page}" style="display:{display}">\n{page_body}\n</div>')
@@ -67,6 +66,7 @@ demo_css = """
   letter-spacing: 0.01em;
 }
 .demo-banner span { opacity: .78; font-weight: 500; }
+.demo-note { font-size: 12.5px; color: var(--muted); }
 """
 
 PAGES_JS = "[" + ", ".join(f"'{p}'" for p in PAGES) + "]"
