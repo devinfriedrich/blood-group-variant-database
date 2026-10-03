@@ -38,8 +38,23 @@
       <h1>Changelog</h1>
     </div>
 
+    <h2 class="visually-hidden">Version History</h2>
+
     <section>
-      <h3 style="color:var(--accent); margin-bottom:6px">2026-09-29: Site reformatting + bugfixes</h3>
+      <h3 style="color:var(--accent); margin-bottom:6px">2026-10-03: Presenter Feedback: Rh Scope, Title Case, Navigation Buttons</h3>
+      <div class="prose">
+        <p>Changes made in response to presenter feedback. No variant records were edited.</p>
+        <ul>
+          <li><strong>Displayed scope:</strong> the site, the statistics, and the CSV/JSON downloads now show only the Rh blood group system (RHD and RHCE, 108 variants). The records for the other systems remain in the source data file and are not deleted. They can be restored with one setting in <code>scripts/normalize_data.py</code> (<code>SCOPE_SYSTEMS</code>) followed by regenerating the data files. Earlier entries below are a dated record and were not rewritten, so they still describe the earlier, wider scope.</li>
+          <li><strong>Headings and labels:</strong> headings, page titles, navigation and footer labels, table column headers, and button labels now use Title Case.</li>
+          <li><strong>Homepage navigation:</strong> six section buttons (Browse Variants, Statistics, Methods, Download and Cite, About, Changelog) were added below the introduction.</li>
+          <li><strong>Display:</strong> the site now opens in light mode regardless of the visitor's system setting; the light/dark toggle still works. The system cards, system filter, and homepage totals are now generated from the data.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h3 style="color:var(--accent); margin-bottom:6px">2026-09-29: Site Reformatting + Bugfixes</h3>
       <div class="prose">
         <p>A round of layout, navigation, and browser changes, plus one data cleanup. No variant records were edited; the only data change removes rows that were never variants.</p>
         <ul>
@@ -54,7 +69,7 @@
     </section>
 
     <section>
-      <h3 style="color:var(--accent); margin-bottom:6px">2026-08-14: NIH-convention & domain-accuracy audit</h3>
+      <h3 style="color:var(--accent); margin-bottom:6px">2026-08-14: NIH-Convention & Domain-Accuracy Audit</h3>
       <div class="prose">
         <p>Ran two independent audits: a website-design pass comparing the site's text and structure against NCBI/NIH resource-page conventions (ClinVar's "What is ClinVar?", the NCBI variation guide), and a blood group genetics domain pass checking terminology and factual framing against ISBT nomenclature. Changes made as a result:</p>
         <ul>
@@ -67,7 +82,7 @@
     </section>
 
     <section>
-      <h3 style="color:var(--accent); margin-bottom:6px">2026-08-13: Full citation audit + site expansion</h3>
+      <h3 style="color:var(--accent); margin-bottom:6px">2026-08-13: Full Citation Audit + Site Expansion</h3>
       <div class="prose">
         <p>Cross-checked all 88 unique PMIDs cited across all 229 variants (141 citation segments) against live PubMed metadata, expanding on the prior sample audit. Found and corrected 15 additional citation errors beyond the original 4, and flagged 3 more that could not be confidently resolved by search alone:</p>
         <ul>
@@ -79,7 +94,7 @@
     </section>
 
     <section>
-      <h3 style="color:var(--accent); margin-bottom:6px">2026-08-12: Initial site build + sample citation audit</h3>
+      <h3 style="color:var(--accent); margin-bottom:6px">2026-08-12: Initial Site Build + Sample Citation Audit</h3>
       <div class="prose">
         <p>Rebuilt the site from the original data compilation: normalized the eight per-system source tables into one shared schema, replaced the prior generic branding with proper Chai Lab / Jun Liu attribution, and designed the searchable browser, Methods, and Citation pages.</p>
         <p>Spot-checked a stratified sample of 24 variants (2-3 per system) against PubMed. Found 4 citation errors (ACKR1-NC-005, ACKR1-NC-006, KEL-NC-002, KIDD-NC-002) and corrected them, surfacing the need for the full audit completed the next day.</p>
@@ -87,7 +102,7 @@
     </section>
 
     <section>
-      <h3 style="color:var(--muted); margin-bottom:6px">Original compilation</h3>
+      <h3 style="color:var(--muted); margin-bottom:6px">Original Compilation</h3>
       <div class="prose">
         <p>229 non-coding and regulatory variants across ABO, RHD, RHCE, Duffy (ACKR1), Kell (KEL), Kidd (SLC14A1), MNS (GYPA/GYPB), and Kell Other compiled by Jun Liu, MD, PhD from primary literature, ISBT allele tables, and RhesusBase.</p>
       </div>
@@ -99,16 +114,16 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <h4>About this resource</h4>
-        <p>A research catalog of non-coding and regulatory blood group variants, compiled for the study of variant-guided base editing strategies for antigen modulation. Not a clinical or diagnostic tool.</p>
+        <h4>About This Resource</h4>
+        <p>A research catalog of non-coding and regulatory variants in the Rh blood group system (RHD and RHCE), compiled for the study of variant-guided base editing strategies for antigen modulation. Not a clinical or diagnostic tool.</p>
       </div>
       <div>
         <h4>Navigate</h4>
         <ul>
-          <li><a href="index.html">Browse variants</a></li>
+          <li><a href="index.html">Browse Variants</a></li>
           <li><a href="stats.html">Statistics</a></li>
           <li><a href="download-cite.html">Download and Cite</a></li>
-          <li><a href="methods.html">Methods &amp; Validation legend</a></li>
+          <li><a href="methods.html">Methods &amp; Validation Legend</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="changelog.html">Changelog</a></li>
         </ul>
@@ -124,7 +139,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; <span id="site-year"></span> Chai Lab, Brigham and Women's Hospital. Data compiled by Jun Liu, MD, PhD.</span>
-      <span><a href="index.html">Back to browser</a></span>
+      <span><a href="index.html">Back to Browser</a></span>
     </div>
   </div>
 </footer>

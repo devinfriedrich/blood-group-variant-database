@@ -14,7 +14,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ["index", "stats", "downloads", "methods", "citation", "about", "changelog"]
+PAGES = ["index", "stats", "methods", "download-cite", "about", "changelog"]
 OUT_DIR = ROOT / "demo"
 OUT_DIR.mkdir(exist_ok=True)
 
@@ -47,11 +47,13 @@ for page in PAGES:
     page_body = text[body_start:body_end]
     # Drop the drawer markup from the page body if present (it's hoisted once, globally)
     page_body = re.sub(r'<div class="drawer-overlay".*?</aside>', "", page_body, flags=re.DOTALL)
-    if page == "downloads":
+    if page == "download-cite":
         csv_b64 = base64.b64encode((ROOT / "data" / "variants.csv").read_bytes()).decode()
         json_b64 = base64.b64encode((ROOT / "data" / "variants.json").read_bytes()).decode()
-        page_body = page_body.replace('href="data/variants.csv"', f'href="data:text/csv;base64,{csv_b64}"')
-        page_body = page_body.replace('href="data/variants.json"', f'href="data:application/json;base64,{json_b64}"')
+        for old, new in (('href="data/variants.csv"', f'href="data:text/csv;base64,{csv_b64}"'),
+                         ('href="data/variants.json"', f'href="data:application/json;base64,{json_b64}"')):
+            assert old in page_body, f"download link {old} not found on download-cite.html"
+            page_body = page_body.replace(old, new)
 
     display = "block" if page == "index" else "none"
     page_sections.append(f'<div class="demo-page" data-page="{page}" style="display:{display}">\n{page_body}\n</div>')
@@ -66,6 +68,8 @@ demo_css = """
 }
 .demo-banner span { opacity: .78; font-weight: 500; }
 """
+
+PAGES_JS = "[" + ", ".join(f"'{p}'" for p in PAGES) + "]"
 
 html = f"""<!doctype html>
 <html lang="en">
@@ -97,31 +101,48 @@ html = f"""<!doctype html>
 </script>
 <script>
 (function () {{
-  function showPage(name) {{
+  var PAGES = {PAGES_JS};
+
+  // Light is the default. The hosting viewer may stamp its own theme onto the page,
+  // so light is asserted on load and once more after 1.5 s, unless the visitor has
+  // already used the site's own toggle (the toggle must keep working).
+  var toggled = false;
+  function forceLight() {{ if (!toggled) document.documentElement.setAttribute('data-theme', 'light'); }}
+  forceLight();
+  setTimeout(forceLight, 1500);
+  document.querySelectorAll('[data-theme-toggle]').forEach(function (b) {{
+    b.addEventListener('click', function () {{ toggled = true; }});
+  }});
+
+  function showPage(name, anchor) {{
     document.querySelectorAll('.demo-page').forEach(function (el) {{
       el.style.display = el.dataset.page === name ? 'block' : 'none';
     }});
-    document.querySelectorAll('.nav-links a, .nav-mobile a').forEach(function (a) {{
-      var target = (a.getAttribute('href') || '').replace('.html', '');
+    document.querySelectorAll('.nav-links a').forEach(function (a) {{
+      var target = (a.getAttribute('href') || '').split('#')[0].replace('.html', '');
       if (target === name) a.setAttribute('aria-current', 'page');
       else a.removeAttribute('aria-current');
     }});
-    window.scrollTo({{ top: 0 }});
+    var el = anchor ? document.getElementById(anchor) : null;
+    if (el) el.scrollIntoView(); else window.scrollTo({{ top: 0 }});
   }}
-  document.querySelectorAll('.nav-links a, .nav-mobile a, footer a').forEach(function (a) {{
+
+  // Every in-site link (nav, footer, hero, quick-nav buttons, inline links) is
+  // intercepted: "page.html", "page.html#anchor", or a bare "#anchor" on the
+  // page being shown. External links are left alone.
+  document.querySelectorAll('a[href]').forEach(function (a) {{
     var href = a.getAttribute('href') || '';
-    if (!href.endsWith('.html')) return;
-    var target = href.replace('.html', '').replace('#browse', '');
+    if (/^(https?:|mailto:|data:)/.test(href)) return;
+    var parts = href.split('#');
+    var page = parts[0].replace('.html', '');
+    var anchor = parts[1] || '';
+    if (page && PAGES.indexOf(page) === -1) return;
     a.addEventListener('click', function (e) {{
       e.preventDefault();
-      showPage(target || 'index');
-      var nav = document.querySelector('.site-nav');
-      if (nav) nav.classList.remove('is-open');
+      var current = (document.querySelector('.demo-page[style*="block"]') || {{ dataset: {{}} }}).dataset.page;
+      showPage(page || current || 'index', anchor);
     }});
   }});
-  // "Browse variants" / "Read the methods" hero buttons and inline links that
-  // point at other pages need the same interception (already covered above
-  // since they're plain <a href="*.html"> tags picked up by the loop).
 }})();
 </script>
 </body>

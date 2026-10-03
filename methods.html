@@ -35,19 +35,19 @@
 <main class="content-page">
   <div class="wrap">
     <div class="page-head">
-      <h1>Methods &amp; data provenance</h1>
+      <h1>Methods &amp; Data Provenance</h1>
     </div>
 
     <section id="scope">
       <h2>Scope</h2>
       <div class="prose">
-        <p>This database catalogs <strong>non-coding and regulatory</strong> variants (promoter, 5&prime;/3&prime; UTR, splice-site, intronic, and structural) reported to influence expression or splicing of six ISBT blood group systems: ABO (001), MNS (002), RH (004), KEL (006), FY/Duffy (008), and JK/Kidd (009). RH and KEL are each browsable here by their component genes or antigen groupings, for guide-design convenience: RHD and RHCE (two genes within RH), and the Kp<sup>a</sup>/Kp<sup>b</sup> and Js<sup>a</sup>/Js<sup>b</sup> antigen pairs (within KEL, alongside K/k).</p>
-        <p>It deliberately excludes common coding-region SNPs that define the classical serological alleles (e.g. the ABO exon 6/7 substitutions) except where a coding variant co-segregates with a regulatory allele background relevant to a listed entry. The intent is to surface the variant classes most useful for guide-design work in genome and base editing, where the accessible target space is often outside the coding sequence.</p>
+        <p>This database catalogs <strong>non-coding and regulatory</strong> variants (promoter, 5&prime;/3&prime; UTR, splice-site, intronic, and structural) reported to influence expression or splicing of the <strong>Rh blood group system</strong> (ISBT system 004). The Rh system is encoded by two genes on chromosome 1, <em>RHD</em> and <em>RHCE</em>, and records are browsable by gene for guide-design convenience. This release is limited to the Rh system.</p>
+        <p>It deliberately excludes common coding-region substitutions that define the classical serological alleles (e.g. the exon 5 substitution that distinguishes the E and e antigens of RHCE) except where a coding variant co-segregates with a regulatory allele background relevant to a listed entry. The intent is to surface the variant classes most useful for guide-design work in genome and base editing, where the accessible target space is often outside the coding sequence.</p>
       </div>
     </section>
 
     <section id="provenance">
-      <h2>Data provenance</h2>
+      <h2>Data Provenance</h2>
       <div class="prose">
         <p>Entries were compiled by <strong>Jun Liu, MD, PhD</strong> (Chai Lab, Brigham and Women's Hospital / Harvard Medical School) from three source types:</p>
         <ul>
@@ -60,15 +60,15 @@
     </section>
 
     <section id="field-definitions">
-      <h2>Field definitions</h2>
+      <h2>Field Definitions</h2>
       <div class="prose">
         <p>The columns in the <a href="download-cite.html#download">CSV/JSON download</a> and the variant detail drawer, grouped by section. Fields not listed here are self-explanatory (e.g. <code>gene</code>, <code>chromosome</code>) or already defined below (validation tier, audit status, base-editing feasibility).</p>
       </div>
       <div class="card">
         <div class="legend-grid" style="grid-template-columns: 1fr;">
-          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">allele_background</span><span>The ISBT allele context the variant occurs on (e.g. B.01, RHCE*Ce), when reported by the source study.</span></div>
-          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">isbt_allele_designation</span><span>The full ISBT allele name assigned to this variant itself, when ISBT has issued one. Distinct from <code>allele_background</code>, which describes the surrounding haplotype rather than the variant's own designation.</span></div>
-          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">phenotype</span><span>The reported red-cell antigen phenotype (e.g. Fy(a&minus;b&minus;), Ko). Where a study reports a functional or expression-magnitude effect instead of a discrete antigen phenotype, that effect description is used here and is not a formal phenotype designation.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">allele_background</span><span>The ISBT allele context the variant occurs on (e.g. RHCE*Ce, RHCE*ce), when reported by the source study.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">isbt_allele_designation</span><span>The full ISBT allele name assigned to this variant itself (e.g. RHD*01N.55), when ISBT has issued one. Distinct from <code>allele_background</code>, which describes the surrounding haplotype rather than the variant's own designation.</span></div>
+          <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">phenotype</span><span>The reported red-cell antigen phenotype (e.g. weak D, DEL, D--). Where a study reports a functional or expression-magnitude effect instead of a discrete antigen phenotype, that effect description is used here and is not a formal phenotype designation.</span></div>
           <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">alternative_notation</span><span>Legacy or alternate variant nomenclature (e.g. older IVS-based intron numbering) for the same variant. Does not contain curation notes.</span></div>
           <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">region</span><span>The genomic feature the variant falls in (promoter, 5&prime;/3&prime; UTR, splice site, intron, or structural element).</span></div>
           <div class="legend-row"><span class="mono" style="min-width:170px; flex:none; font-size:12.5px">mutation_type</span><span>SNV, small insertion/deletion, or structural-variant class.</span></div>
@@ -80,7 +80,7 @@
     </section>
 
     <section id="validation-tiers">
-      <h2>Validation tier legend</h2>
+      <h2>Validation Tier Legend</h2>
       <p>Each entry's evidence is bucketed into one of five tiers for filtering; an entry with both clinical and functional evidence carries both of those tiers. The original, more granular wording is preserved in each variant's detail record. Source studies and prior compilations describe evidence strength in inconsistent terms (e.g. "Strong"/"Moderate"/"Inferred" in some entries, named assay types in others); these free-text labels are algorithmically mapped into the five tiers below rather than drawn from a single controlled vocabulary.</p>
       <div class="card">
         <div class="legend-grid">
@@ -94,7 +94,7 @@
     </section>
 
     <section>
-      <h2>Audit status legend</h2>
+      <h2>Audit Status Legend</h2>
       <p>As part of ongoing curation, every entry is checked against its cited source. The audit label on each record reflects the outcome of that check, not the strength of the underlying biology.</p>
       <div class="card">
         <div class="legend-grid">
@@ -108,7 +108,7 @@
     </section>
 
     <section id="base-editing">
-      <h2>Base-editing feasibility annotations</h2>
+      <h2>Base-Editing Feasibility Annotations</h2>
       <div class="prose">
         <p>Where relevant, each variant is annotated for feasibility with two common CRISPR base editors, evaluated against the reference/alternate allele in its genomic (not transcript) strand context:</p>
         <ul>
@@ -120,9 +120,9 @@
     </section>
 
     <section>
-      <h2>Update cadence</h2>
+      <h2>Update Cadence</h2>
       <div class="prose">
-        <p>Current data release: 2026-08-13. The dataset is reviewed quarterly for new publications relevant to the six covered systems. Between reviews, individual records may be corrected as discrepancies are found during use; see the <a href="changelog.html">Changelog</a> for the dated record of every correction.</p>
+        <p>Current data release: 2026-10-03. The dataset is reviewed quarterly for new publications relevant to the Rh system. Between reviews, individual records may be corrected as discrepancies are found during use; see the <a href="changelog.html">Changelog</a> for the dated record of every correction.</p>
       </div>
     </section>
 
@@ -146,16 +146,16 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <h4>About this resource</h4>
-        <p>A research catalog of non-coding and regulatory blood group variants, compiled for the study of variant-guided base editing strategies for antigen modulation. Not a clinical or diagnostic tool.</p>
+        <h4>About This Resource</h4>
+        <p>A research catalog of non-coding and regulatory variants in the Rh blood group system (RHD and RHCE), compiled for the study of variant-guided base editing strategies for antigen modulation. Not a clinical or diagnostic tool.</p>
       </div>
       <div>
         <h4>Navigate</h4>
         <ul>
-          <li><a href="index.html">Browse variants</a></li>
+          <li><a href="index.html">Browse Variants</a></li>
           <li><a href="stats.html">Statistics</a></li>
           <li><a href="download-cite.html">Download and Cite</a></li>
-          <li><a href="methods.html">Methods &amp; Validation legend</a></li>
+          <li><a href="methods.html">Methods &amp; Validation Legend</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="changelog.html">Changelog</a></li>
         </ul>
@@ -171,7 +171,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; <span id="site-year"></span> Chai Lab, Brigham and Women's Hospital. Data compiled by Jun Liu, MD, PhD.</span>
-      <span><a href="download-cite.html#cite">How to cite</a></span>
+      <span><a href="download-cite.html#cite">How to Cite</a></span>
     </div>
   </div>
 </footer>

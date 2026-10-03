@@ -18,23 +18,15 @@ repository-code: "https://example.org/REPLACE-WITH-REPO-URL"
 type: dataset
 keywords:
   - blood group antigens
-  - ABO
   - Rh
   - RHD
   - RHCE
-  - Duffy
-  - ACKR1
-  - Kell
-  - KEL
-  - Kidd
-  - SLC14A1
-  - MNS
+  - ISBT
   - non-coding variants
   - base editing
 abstract: >
-  A curated database of non-coding and regulatory variants across six ISBT
-  human blood group systems (ABO, RH, MNS, KEL, FY/Duffy, JK/Kidd; genes ABO,
-  RHD, RHCE, GYPA, GYPB, KEL, ACKR1, SLC14A1), compiled from primary
+  A curated database of non-coding and regulatory variants in the Rh human
+  blood group system (ISBT 004; genes RHD and RHCE), compiled from primary
   literature, ISBT allele tables, and RhesusBase, annotated with gnomAD/TOPMed
-  population frequencies, validation evidence tiers, and CRISPR base-editing
+  population frequencies, validation tiers, and CRISPR base-editing
   (BE4max/ABE8e) feasibility.

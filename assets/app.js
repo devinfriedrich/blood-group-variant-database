@@ -8,15 +8,17 @@
   /* ---------------- theme toggle (shared across pages) ---------------- */
   function initTheme() {
     var root = document.documentElement;
-    var saved = localStorage.getItem("bgvdb-theme");
-    if (saved) root.setAttribute("data-theme", saved);
+    var saved = null;
+    try { saved = localStorage.getItem("bgvdb-theme"); } catch (e) { /* storage unavailable */ }
+    // Default is always light: the OS color scheme is deliberately not consulted.
+    root.setAttribute("data-theme", saved === "dark" ? "dark" : "light");
     var btn = document.querySelector("[data-theme-toggle]");
     if (!btn) return;
     btn.addEventListener("click", function () {
       // the site defaults to light; dark only when the visitor picked it
       var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
-      localStorage.setItem("bgvdb-theme", next);
+      try { localStorage.setItem("bgvdb-theme", next); } catch (e) { /* storage unavailable */ }
     });
   }
 
@@ -26,8 +28,79 @@
     });
   }
 
+  /* ---------------- system metadata ---------------- */
+  // Display metadata for every raw-table key the data can contain. Which of these
+  // actually appear on the site is decided by the data (see SCOPE_SYSTEMS in
+  // scripts/normalize_data.py), not by this map: cards, filter options and
+  // statistics are generated only for systems present in window.VARIANT_DATA.
+  // gene: card heading; name: card caption (HTML allowed); option: filter/chart label.
+  var SYSTEM_META = {
+    ABO:       { gene: "ABO",         name: "ABO &middot; ISBT 001 &middot; chr9",          option: "ABO" },
+    RHD:       { gene: "RHD",         name: "Rh &middot; ISBT 004 &middot; chr1",           option: "RHD" },
+    RHCE:      { gene: "RHCE",        name: "Rh &middot; ISBT 004 &middot; chr1",           option: "RHCE" },
+    Duffy:     { gene: "ACKR1",       name: "Duffy (FY) &middot; ISBT 008 &middot; chr1",   option: "Duffy (ACKR1)" },
+    Kell:      { gene: "KEL",         name: "Kell (KEL) &middot; ISBT 006 &middot; chr7",   option: "Kell (KEL)" },
+    Kidd:      { gene: "SLC14A1",     name: "Kidd (JK) &middot; ISBT 009 &middot; chr18",   option: "Kidd (SLC14A1)" },
+    MNS:       { gene: "GYPA / GYPB", name: "MNS &middot; ISBT 002 &middot; chr4",          option: "MNS (GYPA/GYPB)" },
+    KellOther: { gene: "KEL",         name: "Kell (KEL) &middot; Kp<sup>a</sup>/Kp<sup>b</sup>, Js<sup>a</sup>/Js<sup>b</sup>", option: "Kell Other" },
+  };
+  var SYSTEM_ORDER = ["ABO", "RHD", "RHCE", "Duffy", "Kell", "Kidd", "MNS", "KellOther"];
+
+  // Systems present in the data, known ones in SYSTEM_ORDER first.
+  function systemsInData(DATA) {
+    var seen = {};
+    DATA.forEach(function (r) { seen[r.system] = (seen[r.system] || 0) + 1; });
+    var keys = SYSTEM_ORDER.filter(function (k) { return seen[k]; });
+    Object.keys(seen).forEach(function (k) { if (keys.indexOf(k) === -1) keys.push(k); });
+    return { keys: keys, counts: seen };
+  }
+
+  // Metadata for a system key, falling back to what the records themselves say.
+  function systemMeta(key, DATA) {
+    if (SYSTEM_META[key]) return SYSTEM_META[key];
+    var r = DATA.find(function (x) { return x.system === key; }) || {};
+    return {
+      gene: r.gene || key,
+      name: esc(r.system_label || key) + (r.isbt_system_code ? " &middot; ISBT " + esc(r.isbt_system_code) : "") + (r.chromosome ? " &middot; " + esc(r.chromosome) : ""),
+      option: r.system_label || key,
+    };
+  }
+
+  // Builds the system cards (homepage) and the #f-system options from the data.
+  // Must run before multiSelect() converts the select into a checkbox dropdown.
+  function buildSystemUI(DATA) {
+    var info = systemsInData(DATA);
+    var grid = document.querySelector(".system-grid");
+    if (grid) {
+      grid.innerHTML = info.keys.map(function (k) {
+        var m = systemMeta(k, DATA);
+        return '<button class="system-card" data-system-card="' + esc(k) + '"><span class="gene">' + esc(m.gene) +
+          '</span><span class="sys-name">' + m.name + '</span><span class="sys-count">' + info.counts[k] +
+          '<small>' + (info.counts[k] === 1 ? 'variant' : 'variants') + '</small></span></button>';
+      }).join("");
+    }
+    var sel = document.getElementById("f-system");
+    if (sel) {
+      info.keys.forEach(function (k) {
+        var opt = document.createElement("option");
+        opt.value = k;
+        opt.textContent = systemMeta(k, DATA).option;
+        sel.appendChild(opt);
+      });
+    }
+  }
+
+  // Distinct genes; a record holding two genes ("GYPA/GYPB") counts as two.
+  function geneList(DATA) {
+    var set = new Set();
+    DATA.forEach(function (r) {
+      (r.gene || "").split("/").forEach(function (g) { if (g) set.add(g.trim()); });
+    });
+    return Array.from(set);
+  }
+
   /* ---------------- classification helpers ---------------- */
-  // Free-text source fields vary in wording across the 8 systems; these
+  // Free-text source fields vary in wording across the source tables; these
   // bucket them into a small set of filterable/badge-able tiers.
   function categoryBucket(v) {
     var c = (v || "").toLowerCase();
@@ -81,11 +154,22 @@
     return { label: "Unaudited", cls: "badge-low" };
   }
 
+  // Feasibility is the better of the two editors: a variant one editor can make
+  // is Feasible even when the other editor cannot (3 Feasible > 2 Medium >
+  // 1 Not feasible > 0 not assessed).
+  function editorLevel(v) {
+    var c = (v || "").toUpperCase();
+    if (c.indexOf("MEDIUM") > -1) return 2;
+    if (c.indexOf("NOT FEASIBLE") > -1) return 1;
+    if (c.indexOf("FEASIBLE") > -1) return 3;
+    return 0;
+  }
+
   function beTier(be4, abe8) {
-    var c = ((be4 || "") + " " + (abe8 || "")).toUpperCase();
-    if (c.indexOf("FEASIBLE") > -1 && c.indexOf("NOT FEASIBLE") === -1 && c.indexOf("MEDIUM") === -1) return { label: "Feasible", cls: "badge-good" };
-    if (c.indexOf("MEDIUM") > -1) return { label: "Medium", cls: "badge-mid" };
-    if (c.indexOf("NOT FEASIBLE") > -1) return { label: "Not feasible", cls: "badge-low" };
+    var level = Math.max(editorLevel(be4), editorLevel(abe8));
+    if (level === 3) return { label: "Feasible", cls: "badge-good" };
+    if (level === 2) return { label: "Medium", cls: "badge-mid" };
+    if (level === 1) return { label: "Not feasible", cls: "badge-low" };
     return { label: "Not assessed", cls: "badge-low" };
   }
 
@@ -163,7 +247,7 @@
     var clearBtn = document.createElement("button");
     clearBtn.type = "button";
     clearBtn.className = "ms-panel-clear";
-    clearBtn.textContent = "Clear selection";
+    clearBtn.textContent = "Clear Selection";
     clearBtn.addEventListener("click", function () { api.set([]); onChange(); });
     panel.appendChild(clearBtn);
 
@@ -227,10 +311,7 @@
       sortDir: 1,
     };
 
-    var systems = [];
-    DATA.forEach(function (r) {
-      if (systems.indexOf(r.system) === -1) systems.push(r.system);
-    });
+    buildSystemUI(DATA);
 
     var els = {
       search: document.getElementById("q"),
@@ -292,7 +373,11 @@
 
     function sortVal(r, key) {
       if (key === "af") { var af = parseAF(r.gnomad_v4_af_global); return af === null ? -1 : af; }
-      return (r[key] || "").toString().toLowerCase();
+      // Sort by what the table shows (the tier or bucket label), not the raw source text.
+      if (key === "variant_category") return categoryBucket(r.variant_category).toLowerCase();
+      if (key === "validation_level") return validationTiers(r.validation_level).map(function (t) { return t.label; }).join(", ").toLowerCase();
+      if (key === "audit_status") return auditTier(r.audit_status).label.toLowerCase();
+      return (r[key] || "N/A").toString().toLowerCase();
     }
 
     function render() {
@@ -323,14 +408,14 @@
           tr.setAttribute("role", "button");
           tr.setAttribute("aria-label", "View details for " + r.variant_id);
           tr.innerHTML =
-            '<td><div class="cell-primary mono">' + esc(r.variant_id) + '</div>' +
+            '<td data-label="Variant"><div class="cell-primary mono">' + esc(r.variant_id) + '</div>' +
               '<div class="cell-sub">' + esc(r.system_label) + '</div></td>' +
-            '<td class="mono">' + esc(r.hgvs || "N/A") + '</td>' +
-            '<td class="cell-trunc" title="' + esc(r.phenotype || "") + '">' + esc(r.phenotype || "N/A") + '</td>' +
-            '<td>' + esc(categoryBucket(r.variant_category)) + '</td>' +
-            '<td class="mono">' + esc(fmtAF(r.gnomad_v4_af_global)) + '</td>' +
-            '<td>' + tierBadges(vals) + '</td>' +
-            '<td><span class="badge ' + aud.cls + '">' + aud.label + '</span></td>';
+            '<td data-label="HGVS" class="mono">' + esc(r.hgvs || "N/A") + '</td>' +
+            '<td data-label="Observed Phenotype" class="cell-trunc" title="' + esc(r.phenotype || "") + '">' + esc(r.phenotype || "N/A") + '</td>' +
+            '<td data-label="Category">' + esc(categoryBucket(r.variant_category)) + '</td>' +
+            '<td data-label="gnomAD v4 AF" class="mono">' + esc(fmtAF(r.gnomad_v4_af_global)) + '</td>' +
+            '<td data-label="Validation">' + tierBadges(vals) + '</td>' +
+            '<td data-label="Audit"><span class="badge ' + aud.cls + '">' + aud.label + '</span></td>';
           tr.addEventListener("click", function () { openDrawer(r); });
           tr.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDrawer(r); } });
           els.tbody.appendChild(tr);
@@ -385,6 +470,10 @@
     var drawerTitle = document.getElementById("drawer-title");
     var drawerSub = document.getElementById("drawer-sub");
 
+    var lastFocus = null;
+    drawer.setAttribute("aria-hidden", "true");
+    drawer.setAttribute("inert", "");
+
     function row(label, value, mono) {
       if (!value) value = "N/A";
       return '<div class="field-row"><dt>' + label + '</dt><dd' + (mono ? ' class="mono"' : '') + '>' + esc(value) + '</dd></div>';
@@ -411,7 +500,7 @@
           row("Observed phenotype", r.phenotype) +
         '</div></div>' +
 
-        '<div class="field-group"><h4>Genomic location</h4><div class="field-list">' +
+        '<div class="field-group"><h4>Genomic Location</h4><div class="field-list">' +
           row("Gene", r.gene, true) +
           row("Chromosome", r.chromosome + (r.strand ? " (" + r.strand + " strand)" : "")) +
           row("GRCh38", r.grch38_coordinate, true) +
@@ -426,9 +515,9 @@
           '<div class="field-row"><dt>Audit status</dt><dd><span class="badge ' + aud.cls + '">' + aud.label + '</span> <span style="color:var(--muted);font-size:12.5px">' + esc((r.audit_status || "").replace(/^(FLAGGED|CORRECTED|VERIFIED|LIKELY VALID):?\s*/, "")) + '</span></dd></div>' +
         '</div></div>' +
 
-        '<div class="field-group"><h4>Molecular mechanism</h4><div class="mech-box">' + esc(r.molecular_mechanism || "Not described.") + '</div></div>' +
+        '<div class="field-group"><h4>Molecular Mechanism</h4><div class="mech-box">' + esc(r.molecular_mechanism || "Not described.") + '</div></div>' +
 
-        '<div class="field-group"><h4>Population frequency</h4><div class="field-list">' +
+        '<div class="field-group"><h4>Population Frequency</h4><div class="field-list">' +
           row("gnomAD v4 (global)", fmtAF(r.gnomad_v4_af_global), true) +
           row("gnomAD v4 (AFR)", fmtAF(r.gnomad_v4_af_afr), true) +
           row("gnomAD v4 (EUR)", fmtAF(r.gnomad_v4_af_eur), true) +
@@ -436,7 +525,7 @@
           row("Reported population", r.population) +
         '</div></div>' +
 
-        '<div class="field-group"><h4>Base editing feasibility</h4><div class="field-list">' +
+        '<div class="field-group"><h4>Base Editing Feasibility</h4><div class="field-list">' +
           '<div class="field-row"><dt>Overall</dt><dd><span class="badge ' + be.cls + '">' + be.label + '</span></dd></div>' +
           row("BE4max (C→T)", r.be4max_feasibility) +
           row("ABE8e (A→G)", r.abe8e_feasibility) +
@@ -444,7 +533,7 @@
           row("Bystander edits", r.bystander_edits) +
         '</div></div>' +
 
-        '<div class="field-group"><h4>Reference & links</h4>' +
+        '<div class="field-group"><h4>Reference & Links</h4>' +
           '<p style="margin-bottom:10px">' + esc(r.key_reference || "Not specified") + (r.first_report_year ? " (first reported " + esc(r.first_report_year) + ")" : "") + '</p>' +
           '<div class="link-row">' +
             (r.pubmed_source_url ? '<a href="' + esc(r.pubmed_source_url) + '" target="_blank" rel="noopener">PubMed ↗</a>' : '') +
@@ -452,21 +541,40 @@
           '</div>' +
         '</div>' +
 
-        '<div class="field-group"><h4>Cite this entry</h4><div class="cite-box">' + esc(citeText) + '</div></div>';
+        '<div class="field-group"><h4>Cite This Entry</h4><div class="cite-box">' + esc(citeText) + '</div></div>';
 
+      lastFocus = document.activeElement;
+      drawer.removeAttribute("aria-hidden");
+      drawer.removeAttribute("inert");
       overlay.classList.add("is-open");
       drawer.classList.add("is-open");
       drawer.focus();
     }
 
     function closeDrawer() {
+      if (!drawer.classList.contains("is-open")) return;
       overlay.classList.remove("is-open");
       drawer.classList.remove("is-open");
+      drawer.setAttribute("aria-hidden", "true");
+      drawer.setAttribute("inert", "");
+      if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+      lastFocus = null;
     }
 
     overlay.addEventListener("click", closeDrawer);
     document.getElementById("drawer-close").addEventListener("click", closeDrawer);
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDrawer(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { closeDrawer(); return; }
+      if (e.key !== "Tab" || !drawer.classList.contains("is-open")) return;
+      // Modal behaviour: Tab and Shift+Tab cycle inside the open drawer.
+      var items = Array.prototype.filter.call(
+        drawer.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'),
+        function (el) { return el.offsetParent !== null; });
+      if (!items.length) { e.preventDefault(); drawer.focus(); return; }
+      var first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === drawer)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
 
     render();
 
@@ -512,12 +620,19 @@
       }).join("");
     }
 
-    var SYSTEM_ORDER = ["ABO", "RHD", "RHCE", "Duffy", "Kell", "Kidd", "MNS", "KellOther"];
-    var SYSTEM_LABELS = { ABO: "ABO", RHD: "RHD", RHCE: "RHCE", Duffy: "Duffy (ACKR1)", Kell: "Kell (KEL)", Kidd: "Kidd (SLC14A1)", MNS: "MNS (GYPA/GYPB)", KellOther: "Kell Other" };
-    var bySystem = count(function (r) { return r.system; });
+    // Systems come from the data, so a narrowed scope shows only what is published.
+    var sysInfo = systemsInData(DATA);
+    var sysLabels = sysInfo.keys.map(function (s) { return systemMeta(s, DATA).option; });
     var bySystemLabeled = {};
-    SYSTEM_ORDER.forEach(function (s) { bySystemLabeled[SYSTEM_LABELS[s]] = bySystem[s] || 0; });
-    renderBars("chart-system", bySystemLabeled, SYSTEM_ORDER.map(function (s) { return SYSTEM_LABELS[s]; }));
+    sysInfo.keys.forEach(function (s, i) { bySystemLabeled[sysLabels[i]] = sysInfo.counts[s]; });
+    renderBars("chart-system", bySystemLabeled, sysLabels);
+    var isbtCodes = new Set();
+    DATA.forEach(function (r) { if (r.isbt_system_code) isbtCodes.add(r.isbt_system_code); });
+    var sysSub = document.getElementById("chart-system-sub");
+    if (sysSub) {
+      sysSub.innerHTML = "All " + DATA.length + " entries, across " + isbtCodes.size + " ISBT blood group system" +
+        (isbtCodes.size === 1 ? "" : "s") + ". Entries are grouped by the gene they are filed under; see <a href=\"methods.html#scope\">Scope</a>.";
+    }
 
     renderBars("chart-category", count(function (r) { return categoryBucket(r.variant_category); }));
 
@@ -543,26 +658,37 @@
     renderBars("chart-be", count(function (r) { return beTier(r.be4max_feasibility, r.abe8e_feasibility).label; }), BE_ORDER, beCls);
 
     // headline stat tiles
-    // Some records store two genes in one field (e.g. "GYPA/GYPB" for MNS);
-    // split on "/" so the gene count reflects distinct gene loci, not strings.
-    var geneSet = new Set();
-    DATA.forEach(function (r) {
-      (r.gene || "").split("/").forEach(function (g) { if (g) geneSet.add(g.trim()); });
-    });
-    var genes = Array.from(geneSet);
+    var genes = geneList(DATA);
     var refs = new Set();
     DATA.forEach(function (r) {
       (r.key_reference || "").split(";").forEach(function (seg) {
-        var m = seg.match(/PMID[:\s]*\d{6,9}/);
-        if (m) refs.add(m[0]);
+        var m = seg.match(/PMID[:\s]*(\d{6,9})/);
+        if (m) refs.add(m[1]);
       });
     });
-    var withAF = DATA.filter(function (r) { return r.gnomad_v4_af_global && r.gnomad_v4_af_global !== "N/A"; }).length;
+    var withAF = DATA.filter(function (r) { return parseAF(r.gnomad_v4_af_global) !== null; }).length;
     var setText = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
     setText("stat-total", DATA.length);
     setText("stat-genes", genes.length);
-    setText("stat-refs", refs.size + "+");
+    setText("stat-refs", refs.size);
     setText("stat-af", withAF);
+  }
+
+  /* ---------------- homepage hero tiles ---------------- */
+  function initHero() {
+    var DATA = window.VARIANT_DATA || [];
+    var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
+    var codes = new Set(), tiers = new Set();
+    DATA.forEach(function (r) {
+      if (r.isbt_system_code) codes.add(r.isbt_system_code);
+      validationTiers(r.validation_level).forEach(function (t) { tiers.add(t.label); });
+    });
+    set("hero-total", DATA.length);
+    set("hero-systems", codes.size);
+    var sysTile = document.getElementById("hero-systems");
+    if (sysTile && sysTile.nextElementSibling) sysTile.nextElementSibling.textContent = codes.size === 1 ? "ISBT Blood Group System" : "ISBT Blood Group Systems";
+    set("hero-genes", geneList(DATA).length);
+    set("hero-tiers", tiers.size);
   }
 
   function initCopyButtons() {
@@ -580,11 +706,32 @@
     });
   }
 
+  // Opened straight from disk (file://), Chrome ignores the download attribute on
+  // JSON and shows it in the tab instead. Build the file from the loaded data so
+  // "Download JSON" saves a file there too. Hosted (http/https) pages use the real link.
+  function initFileDownloads() {
+    if (location.protocol !== "file:") return;
+    // Never replace the real link with an empty file: only act when the data is loaded.
+    if (!Array.isArray(window.VARIANT_DATA) || !window.VARIANT_DATA.length) return;
+    document.querySelectorAll('a[download][href$=".json"]').forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        var blob = new Blob([JSON.stringify(window.VARIANT_DATA || [], null, 2)], { type: "application/json" });
+        var url = URL.createObjectURL(blob), tmp = document.createElement("a");
+        tmp.href = url; tmp.download = a.getAttribute("href").split("/").pop();
+        document.body.appendChild(tmp); tmp.click(); document.body.removeChild(tmp);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initTheme();
+    initHero();
     initBrowser();
     initStats();
     initCopyButtons();
+    initFileDownloads();
     var yearEl = document.getElementById("site-year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   });

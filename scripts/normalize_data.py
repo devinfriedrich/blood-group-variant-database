@@ -22,6 +22,15 @@ OUT_PATH = ROOT / "data" / "variants.json"
 JS_OUT_PATH = ROOT / "assets" / "data.js"
 CSV_OUT_PATH = ROOT / "data" / "variants.csv"
 
+# SCOPE SWITCH. Which raw tables (keys of data/variants_raw.json) are published
+# on the site and in the CSV/JSON downloads. The presenter build shows only the
+# Rh blood group system (genes RHD and RHCE). Set this to [] to include every
+# system again, then re-run this script: the site (cards, filters, statistics,
+# downloads) is driven entirely by the generated data, so no other edit is
+# needed. data/variants_raw.json is never filtered or modified.
+# Valid keys: ABO, RHD, RHCE, Duffy, Kell, Kidd, MNS, KellOther.
+SCOPE_SYSTEMS = ["RHD", "RHCE"]
+
 # System display metadata (used for cards + badges on the site)
 SYSTEM_LABELS = {
     "ABO": "ABO",
@@ -85,7 +94,14 @@ def normalize_record(system, meta, record):
 def main():
     raw = json.loads(RAW_PATH.read_text())
     normalized = []
+    unknown = [k for k in SCOPE_SYSTEMS if k not in raw]
+    if unknown:
+        raise SystemExit(f"SCOPE_SYSTEMS has unknown system key(s): {unknown}")
+    included = [k for k in raw if not SCOPE_SYSTEMS or k in SCOPE_SYSTEMS]
+    hidden = [k for k in raw if k not in included]
     for system, table in raw.items():
+        if system not in included:
+            continue
         meta = table["meta"]
         for record in table["variants"]:
             normalized.append(normalize_record(system, meta, record))
@@ -113,6 +129,13 @@ def main():
         counts[r["system"]] = counts.get(r["system"], 0) + 1
     for k, v in counts.items():
         print(f"  {k}: {v}")
+    print("Included systems:", ", ".join(included))
+    if hidden:
+        hidden_n = sum(len(raw[k]["variants"]) for k in hidden)
+        print(f"Hidden systems (kept in variants_raw.json, not published): "
+              f"{', '.join(hidden)} ({hidden_n} variants)")
+    else:
+        print("Hidden systems: none (SCOPE_SYSTEMS is empty, all systems included)")
 
 
 if __name__ == "__main__":

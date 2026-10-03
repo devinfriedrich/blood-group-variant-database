@@ -1,9 +1,18 @@
 # Blood Group Non-Coding Variant Database
 
-A static, searchable website cataloging **234 non-coding and regulatory
-variants** across 8 blood group systems: ABO, RHD, RHCE, Duffy (ACKR1),
-Kell (KEL), Kidd (SLC14A1), MNS (GYPA/GYPB), and Kell Other Antigens
-(Kp<sup>a</sup>/Kp<sup>b</sup>, Js<sup>a</sup>/Js<sup>b</sup>).
+A static, searchable website cataloging non-coding and regulatory variants
+in the **Rh blood group system** (genes RHD and RHCE; 108 variants in the
+current release).
+
+**Displayed scope.** The compiled source data holds more blood group systems
+than the site shows. Which systems are published is controlled by one
+setting, `SCOPE_SYSTEMS` at the top of `scripts/normalize_data.py` (currently
+`["RHD", "RHCE"]`). The website, statistics, and CSV/JSON downloads are all
+generated from the filtered data. To publish every system again, set it to
+`[]` and run `python3 scripts/normalize_data.py`; the system cards, filter
+options, and statistics follow the data. Some descriptive prose (home page,
+Methods, About, this README) is written for the Rh scope and would need to be
+reworded to match a wider scope.
 
 Built for the **Chai Lab**, Department of Pathology, Brigham and Women's
 Hospital / Harvard Medical School. Data compiled and curated by **Jun Liu,
@@ -27,17 +36,20 @@ MD, PhD**.
 
 **Code & data**
 - `assets/style.css`, `assets/app.js`: all styling and browser/stats/nav
-  logic, no build step, no external dependencies. Light/dark mode, working
-  mobile navigation menu.
+  logic, no build step, no external dependencies. Light/dark mode (light by
+  default).
 - `assets/data.js`: the dataset as a plain `<script>` global
   (`window.VARIANT_DATA`), so the site works when opened directly from disk
   (double-click `index.html`) with no local server required.
 - `data/variants_raw.json`: source-of-truth data, one table per system, as
-  originally compiled (kept for audit trail / to feed future updates).
-- `data/variants.json` / `data/variants.csv`: the same data normalized into
-  one flat schema, as JSON and CSV (the files linked from Downloads).
+  originally compiled (kept complete, including systems that are not
+  currently displayed; for audit trail / to feed future updates).
+- `data/variants.json` / `data/variants.csv`: the in-scope data normalized
+  into one flat schema, as JSON and CSV (the files linked from Download and
+  Cite).
 - `scripts/normalize_data.py`: regenerates `data/variants.json`,
-  `assets/data.js`, and `data/variants.csv` from `data/variants_raw.json`.
+  `assets/data.js`, and `data/variants.csv` from `data/variants_raw.json`,
+  keeping only the systems listed in `SCOPE_SYSTEMS`.
   Run this after editing the raw data:
   ```
   python3 scripts/normalize_data.py
@@ -49,7 +61,7 @@ MD, PhD**.
   script (not yet implemented; see file header).
 - `scripts/build_demo.py`: builds `demo/demo.html`, a single self-contained
   file (inlined CSS/JS/data, page-to-page nav reimplemented as JS show/hide)
-  for sharing as a Claude Artifact preview. Not part of the deployable site;
+  for sharing as a Claude Artifact preview. Opens in light mode. Not part of the deployable site;
   `demo/` is gitignored. Rebuild after any real page/style change:
   ```
   python3 scripts/build_demo.py
@@ -62,10 +74,9 @@ MD, PhD**.
 
 ## Editing the data
 
-1. Edit `data/variants_raw.json` (grouped by system: `ABO`, `RHD`, `RHCE`,
-   `Duffy`, `Kell`, `Kidd`, `MNS`, `KellOther`, each with a `meta`, `headers`,
-   and `variants` array).
-2. Run `python3 scripts/normalize_data.py` from the `scripts/` directory.
+1. Edit `data/variants_raw.json` (one table per system, each with a `meta`,
+   `headers`, and `variants` array; the Rh tables are `RHD` and `RHCE`).
+2. Run `python3 scripts/normalize_data.py` from the repository root (the script locates its own files, so it also runs from other folders).
 3. Refresh `index.html` in a browser to check the change.
 
 ## Hosting
@@ -81,13 +92,13 @@ BWH/Harvard-hosted web space. No build step required.
       `download-cite.html` → Usage & license) and update that section.
 - [ ] Fill in `scripts/update_variants.py` if the quarterly auto-update
       workflow should actually run.
-- [ ] Resolve the 3 records still flagged from the full citation audit
-      (see `changelog.html` → 2026-08-13): ABO-NC-036, and one reference
-      each on ACKR1-NC-002 and KELLOTHER-NC-010, whose cited PMIDs don't
-      match their descriptions and couldn't be confidently replaced by
-      search alone.
-- [ ] All 88 unique cited PMIDs have been checked against real PubMed
-      metadata (author/journal/year); gnomAD v4 and TOPMed allele
+- [ ] Resolve the records still flagged from the full citation audit (see
+      `changelog.html` → 2026-08-13). Some flagged records are in the displayed Rh
+      scope (filter Browse by Audit Status: Flagged); the rest are in systems that are not
+      currently displayed and remain in `data/variants_raw.json`.
+- [ ] The 88 unique PMIDs cited as of 2026-08-13 were checked against real PubMed
+      metadata (author/journal/year); references added or changed since then have not
+      been re-checked; gnomAD v4 and TOPMed allele
       frequencies themselves have **not** been independently re-verified
       against gnomAD: worth a spot-check before treating those numbers as
       launch-ready.

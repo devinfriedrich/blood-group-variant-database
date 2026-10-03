@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Statistics: Blood Group Variant Database</title>
-<meta name="description" content="Dataset statistics for the Blood Group Non-Coding Variant Database: coverage by system, category, evidence tier, and base-editing feasibility.">
+<meta name="description" content="Dataset statistics for the Blood Group Non-Coding Variant Database: coverage by gene, category, validation tier, and base-editing feasibility.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -35,43 +35,44 @@
 <main class="content-page" id="stats-root">
   <div class="wrap">
     <div class="page-head">
-      <h1>Dataset statistics</h1>
-      <p class="lede">Breaking down the current database: coverage by system, category, strength of the supporting evidence, and how much is feasible to target with current base editors.</p>
+      <h1>Dataset Statistics</h1>
+      <p class="lede">Breaking down the current database: coverage by gene, category, strength of the supporting evidence, and how much is feasible to target with current base editors.</p>
     </div>
 
     <section>
       <div class="grid-4" style="margin-bottom: 8px;">
-        <div class="stat-panel" style="text-align:left"><div class="stat-num" id="stat-total">...</div><div class="stat-label">Total variants</div></div>
-        <div class="stat-panel" style="text-align:left"><div class="stat-num" id="stat-genes">...</div><div class="stat-label">Genes covered</div></div>
-        <div class="stat-panel" style="text-align:left"><div class="stat-num" id="stat-refs">...</div><div class="stat-label">Distinct PubMed references</div></div>
-        <div class="stat-panel" style="text-align:left"><div class="stat-num" id="stat-af">...</div><div class="stat-label">With a gnomAD v4 frequency</div></div>
+        <div class="stat-panel" style="text-align:left"><div class="stat-num" id="stat-total">...</div><div class="stat-label">Total Variants</div></div>
+        <div class="stat-panel" style="text-align:left"><div class="stat-num" id="stat-genes">...</div><div class="stat-label">Genes Covered</div></div>
+        <div class="stat-panel" style="text-align:left"><div class="stat-num" id="stat-refs">...</div><div class="stat-label">Distinct PubMed References</div></div>
+        <div class="stat-panel" style="text-align:left"><div class="stat-num" id="stat-af">...</div><div class="stat-label">With a gnomAD v4 Frequency</div></div>
       </div>
     </section>
 
     <section>
+      <h2 class="visually-hidden">Charts</h2>
       <div class="grid-2" id="chart-grid">
         <div class="chart-card">
-          <h3>Variants by gene / antigen grouping</h3>
-          <div class="chart-sub">All 234 entries, across 6 ISBT systems. RH and KEL are each split into their component genes/antigen groupings here; see <a href="methods.html#scope">Scope</a>.</div>
+          <h3>Variants by Gene</h3>
+          <div class="chart-sub" id="chart-system-sub">See <a href="methods.html#scope">Scope</a>.</div>
           <div class="bar-rows" id="chart-system"></div>
         </div>
         <div class="chart-card">
-          <h3>Variants by functional category</h3>
+          <h3>Variants by Functional Category</h3>
           <div class="chart-sub">Bucketed from the source literature's free-text classification</div>
           <div class="bar-rows" id="chart-category"></div>
         </div>
         <div class="chart-card">
-          <h3>Validation tier</h3>
-          <div class="chart-sub">See <a href="methods.html#validation-tiers">Methods</a> for tier definitions</div>
+          <h3>Validation Tier</h3>
+          <div class="chart-sub">See <a href="methods.html#validation-tiers">Methods</a> for tier definitions. Records supported by more than one kind of evidence are counted in each tier, so the bars can add up to more than the total.</div>
           <div class="bar-rows" id="chart-validation"></div>
         </div>
         <div class="chart-card">
-          <h3>Audit status</h3>
+          <h3>Audit Status</h3>
           <div class="chart-sub">Result of the reference-check pass on each entry</div>
           <div class="bar-rows" id="chart-audit"></div>
         </div>
         <div class="chart-card" style="grid-column: 1 / -1;">
-          <h3>Base-editing feasibility (BE4max / ABE8e combined)</h3>
+          <h3>Base-Editing Feasibility (BE4max / ABE8e Combined)</h3>
           <div class="chart-sub">Chemical compatibility only, not a validated guide design; see <a href="methods.html#base-editing">Methods</a></div>
           <div class="bar-rows" id="chart-be"></div>
         </div>
@@ -84,16 +85,16 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <h4>About this resource</h4>
-        <p>A research catalog of non-coding and regulatory blood group variants, compiled for the study of variant-guided base editing strategies for antigen modulation. Not a clinical or diagnostic tool.</p>
+        <h4>About This Resource</h4>
+        <p>A research catalog of non-coding and regulatory variants in the Rh blood group system (RHD and RHCE), compiled for the study of variant-guided base editing strategies for antigen modulation. Not a clinical or diagnostic tool.</p>
       </div>
       <div>
         <h4>Navigate</h4>
         <ul>
-          <li><a href="index.html">Browse variants</a></li>
+          <li><a href="index.html">Browse Variants</a></li>
           <li><a href="stats.html">Statistics</a></li>
           <li><a href="download-cite.html">Download and Cite</a></li>
-          <li><a href="methods.html">Methods &amp; Validation legend</a></li>
+          <li><a href="methods.html">Methods &amp; Validation Legend</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="changelog.html">Changelog</a></li>
         </ul>
@@ -109,7 +110,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; <span id="site-year"></span> Chai Lab, Brigham and Women's Hospital. Data compiled by Jun Liu, MD, PhD.</span>
-      <span><a href="index.html">Back to browser</a></span>
+      <span><a href="index.html">Back to Browser</a></span>
     </div>
   </div>
 </footer>
