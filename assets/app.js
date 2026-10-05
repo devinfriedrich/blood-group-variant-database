@@ -77,7 +77,6 @@
     if (c.indexOf("FLAGGED") === 0) return { label: "Flagged", cls: "badge-flag" };
     if (c.indexOf("CORRECTED") === 0) return { label: "Corrected", cls: "badge-mid" };
     if (c.indexOf("VERIFIED") === 0) return { label: "Verified", cls: "badge-good" };
-    if (c.indexOf("LIKELY VALID") === 0) return { label: "Likely valid", cls: "badge-good" };
     return { label: "Unaudited", cls: "badge-low" };
   }
 
@@ -528,9 +527,9 @@
     }
     renderBars("chart-validation", count(function (r) { return validationTiers(r.validation_level).map(function (t) { return t.label; }); }), VAL_ORDER, valCls);
 
-    var AUDIT_ORDER = ["Verified", "Likely valid", "Corrected", "Flagged", "Unaudited"];
+    var AUDIT_ORDER = ["Verified", "Corrected", "Flagged", "Unaudited"];
     function auditCls(label) {
-      var map = { "Verified": "tier-good", "Likely valid": "tier-good", "Corrected": "tier-mid", "Flagged": "tier-flag" };
+      var map = { "Verified": "tier-good", "Corrected": "tier-mid", "Flagged": "tier-flag" };
       return map[label] || "tier-low";
     }
     renderBars("chart-audit", count(function (r) { return auditTier(r.audit_status).label; }), AUDIT_ORDER, auditCls);
@@ -565,6 +564,46 @@
     setText("stat-af", withAF);
   }
 
+  /* ---------------- feedback form (feedback.html) ---------------- */
+  // Sent through FormSubmit, which emails each submission to the address in the
+  // form's action. With JS it posts in the background and stays on the page;
+  // without JS the plain form POST still works.
+  function initFeedback() {
+    var form = document.getElementById("feedback-form");
+    if (!form) return;
+    var status = document.getElementById("feedback-status");
+    var button = form.querySelector('button[type="submit"]');
+
+    function show(msg, ok) {
+      status.textContent = msg;
+      status.className = "form-status " + (ok ? "is-ok" : "is-error");
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      var data = new FormData(form);
+      data.set("_subject", "Variant database feedback: " + data.get("feedback_type") + ": " + data.get("subject"));
+      button.disabled = true;
+      show("Sending…", true);
+      fetch(form.action.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data,
+      })
+        .then(function (res) { return res.json().then(function (body) { return { ok: res.ok, body: body }; }); })
+        .then(function (r) {
+          if (!r.ok || String(r.body.success) !== "true") throw new Error(r.body.message || "Submission failed");
+          form.reset();
+          show("Thank you. Your feedback has been sent.", true);
+        })
+        .catch(function () {
+          show("Your feedback could not be sent. Please try again in a few minutes.", false);
+        })
+        .then(function () { button.disabled = false; });
+    });
+  }
+
   function initCopyButtons() {
     document.querySelectorAll("[data-copy-target]").forEach(function (btn) {
       var label = btn.textContent;
@@ -585,6 +624,7 @@
     initBrowser();
     initStats();
     initCopyButtons();
+    initFeedback();
     var yearEl = document.getElementById("site-year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   });

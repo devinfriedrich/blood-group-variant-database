@@ -153,7 +153,7 @@ p { margin: 0 0 1em; color: var(--ink-soft); }
 
 /* narrower screens: the page tabs become a row of buttons under the title.
    The bar stops being sticky here, since the extra row would cover too much of the page. */
-@media (max-width: 1040px) {
+@media (max-width: 1120px) {
   .site-nav { position: static; }
   html { scroll-padding-top: 16px; }
   .site-nav .wrap { flex-wrap: wrap; height: auto; padding-top: 10px; padding-bottom: 12px; row-gap: 10px; }
@@ -381,6 +381,30 @@ table.variant-table { width: 100%; border-collapse: collapse; font-size: 13.5px;
 .content-page section h3 { font-size: 15px; margin: 18px 0 8px; }
 .content-page .prose ul, .content-page .prose ol { color: var(--ink-soft); padding-left: 22px; margin: 0 0 1em; }
 .content-page .prose li { margin-bottom: 6px; }
+
+/* ---------- feedback form ---------- */
+.feedback-form { margin-top: 18px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.form-field-wide { grid-column: 1 / -1; }
+.form-field label { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.form-field input, .form-field select, .form-field textarea {
+  width: 100%; padding: 9px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong); background: var(--paper); color: var(--ink);
+  font-size: 14px; font-family: var(--font-sans);
+}
+.form-field textarea { resize: vertical; min-height: 150px; line-height: 1.5; }
+.form-field input::placeholder, .form-field textarea::placeholder { color: var(--muted); }
+.req { color: var(--tier-flag); }
+.form-actions { display: flex; align-items: center; gap: 14px; margin-top: 20px; }
+.form-actions .btn:disabled { opacity: .6; cursor: default; }
+.form-hint { font-size: 12.5px; color: var(--muted); }
+.form-status { margin-top: 14px; font-size: 14px; }
+.form-status:empty { display: none; }
+.form-status.is-ok { color: var(--tier-good); }
+.form-status.is-error { color: var(--tier-flag); }
+.form-note { font-size: 12.5px; color: var(--muted); margin-top: 12px; }
+@media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
 
 .card {
   border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface);

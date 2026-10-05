@@ -2353,7 +2353,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2024",
     "key_reference": "Shao 2024, Transfusion Medicine",
     "pubmed_source_url": "https://onlinelibrary.wiley.com/doi/10.1111/tme.13080",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": ""
   },
   {
@@ -2429,7 +2429,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2026",
     "key_reference": "gnomAD v4",
     "pubmed_source_url": "https://gnomad.broadinstitute.org",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/rs1320440029?dataset=gnomad_r4"
   },
   {
@@ -2467,7 +2467,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2012",
     "key_reference": "RhesusBase",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25272538-C-T?dataset=gnomad_r4"
   },
   {
@@ -2505,7 +2505,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2026",
     "key_reference": "gnomAD v4",
     "pubmed_source_url": "https://gnomad.broadinstitute.org",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/rs1359138965?dataset=gnomad_r4"
   },
   {
@@ -2581,7 +2581,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2014",
     "key_reference": "Garcia et al. 2015; Wagner 2023; Wagner 2023 DOI: 10.1111/trf.12828",
     "pubmed_source_url": "https://aob.amegroups.org/article/view/7557/html#:~:text=RHD%2A01EL.30%20c.1074",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25272696-G-T?dataset=gnomad_r4"
   },
   {
@@ -2619,7 +2619,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2007",
     "key_reference": "Fichou et al. 2015 PMID: 25808592",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/25808592/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -2695,7 +2695,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2008",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -2809,7 +2809,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2012",
     "key_reference": "Fichou Y, Le Marechal C, Bryckaert L, Guerry C, Benech C, Dupont I, Jamet D, Ferec C, Chen JM. Extensive functional analyses of RHD splice site variants: insights into the potential role of splicing in the physiology of Rh. Transfusion. 2015;55(6 Pt 2):1432-1443. doi:10.1111/trf.13083. PMID 25808592 (Table 1: D phenotype ND, citing Wagner FF, Mardt I, Bittner R, et al. Vox Sang. 2012;103:15)",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/25808592/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -2847,7 +2847,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2012",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25301687-G-A?dataset=gnomad_r4"
   },
   {
@@ -2885,7 +2885,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2012",
     "key_reference": "RHeference RHef00712; Jia et al. (reassigned to RHD-ADD-002, c.801+2T>G)",
     "pubmed_source_url": "https://www.rheference.org/allele/RHef00712",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25301688-T-A?dataset=gnomad_r4"
   },
   {
@@ -2923,7 +2923,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2014",
     "key_reference": "Raud et al. 2019 (minigene splicing assay, Table 1) PMID: 30811032 DOI: 10.1111/trf.15210 Allele designations: RHD*01N.55",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/30811032/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -2961,7 +2961,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2013",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3037,7 +3037,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2016",
     "key_reference": "de Paula Vendrame TA et al. Characterization of RHD alleles present in serologically RHD-negative donors determined by a sensitive microplate technique. Vox Sang 2019. doi:10.1111/vox.12851; RHeference RHef00681",
     "pubmed_source_url": "https://onlinelibrary.wiley.com/doi/full/10.1111/vox.12851",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25306730-G-A?dataset=gnomad_r4"
   },
   {
@@ -3075,7 +3075,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2014",
     "key_reference": "Stegmann et al. 2016 DOI: 10.1111/bjh.13960",
     "pubmed_source_url": "https://onlinelibrary.wiley.com/doi/full/10.1111/bjh.13960",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3113,7 +3113,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2012",
     "key_reference": "Fichou Y, Le Marechal C, Bryckaert L, Guerry C, Benech C, Dupont I, Jamet D, Ferec C, Chen JM. Extensive functional analyses of RHD splice site variants: insights into the potential role of splicing in the physiology of Rh. Transfusion. 2015;55(6 Pt 2):1432-1443. doi:10.1111/trf.13083. PMID 25808592 (Table 1: D phenotype Negative, source Rhesus Base)",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/25808592/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25306731-T-C?dataset=gnomad_r4"
   },
   {
@@ -3151,7 +3151,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2001",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3227,7 +3227,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2007",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3265,7 +3265,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2011",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25290639-A-G?dataset=gnomad_r4"
   },
   {
@@ -3341,7 +3341,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2010",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3379,7 +3379,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2014",
     "key_reference": "Garcia F, Rodriguez MA, Goldman M, et al. New RHD variant alleles. Transfusion. 2015;55(2):427-429. doi:10.1111/trf.12828 (Table 1, case 3.1: donor, IVS4-2A>C splice site, allele RHD*IVS4-2C, GenBank KF861936, haplotype DcE or Dce, phenotype Partial D); Raud L, Le Marechal C, Gehannin P, et al. Functional analysis of novel RHD variants: splicing disruption is likely to be a common mechanism of variant D phenotype. Transfusion. 2019. doi:10.1111/trf.15210; RhesusBase allele RHD*54",
     "pubmed_source_url": "https://doi.org/10.1111/trf.12828",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3455,7 +3455,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2014",
     "key_reference": "ISBT; Rheference RHef00508 (RHD*01N.71); Stegmann et al. 2016 (Br J Haematol, 10.1111/bjh.13960) Allele designations: RHD*01N.71, RHD*1074-1G>A Rheference: RHef00508 DOI: 10.1111/bjh.13960",
     "pubmed_source_url": "https://onlinelibrary.wiley.com/doi/full/10.1111/bjh.13960",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3493,7 +3493,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2011",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3569,7 +3569,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2014",
     "key_reference": "Raud et al. 2019 (minigene splicing assay, Table 1; primary functional reference) PMID: 30811032 DOI: 10.1111/trf.15210 | Related, different substitution c.1228-1G>C: Wu et al., Transfusion 2021;61:E55-E56 PMID: 34291823 DOI: 10.1111/trf.16510 Allele designations: RHD*01N.77",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/30811032/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3607,7 +3607,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2010",
     "key_reference": "ISBT v6.4",
     "pubmed_source_url": "https://www.isbtweb.org",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": ""
   },
   {
@@ -3721,7 +3721,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2008",
     "key_reference": "Fichou Y, Gehannin P, Corre M, Le Guern A, Le Marechal C, Le Gac G, Ferec C. Extensive functional analyses of RHD splice site variants: insights into the potential role of splicing in the physiology of Rh. Transfusion. 2015;55(6 Pt 2):1432-1443. doi:10.1111/trf.13083. PMID 25808592; Ye L, He Y, Gao H, Xie J, Zeng J, Malomgre W, Shao C, Zhou D, Zhu Z. Weak D phenotypes caused by intronic mutations in the RHD gene: four novel weak D alleles identified in the Chinese population. Transfusion. 2013;53(8):1829-1833. doi:10.1111/trf.12005",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/25808592/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25290794-G-C?dataset=gnomad_r4"
   },
   {
@@ -3759,7 +3759,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2007",
     "key_reference": "Fichou Y, Le Marechal C, Bryckaert L, Guerry C, Benech C, Dupont I, Jamet D, Ferec C, Chen JM. Extensive functional analyses of RHD splice site variants: insights into the potential role of splicing in the physiology of Rh. Transfusion. 2015;55(6 Pt 2):1432-1443. doi:10.1111/trf.13083. PMID 25808592; Le Marechal C, Guerry C, Benech C, Burlot L, Cavelier B, Porra V, Muller JY, Ferec C, Chen JM. Identification of 12 novel RHD alleles in western France by denaturing high-performance liquid chromatography analysis. Transfusion. 2007;47(5):858-863. doi:10.1111/j.1537-2995.2007.01199.x",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/25808592/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3835,7 +3835,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2010",
     "key_reference": "Fichou et al. 2015 Allele designations: RHD*01EL.14",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3911,7 +3911,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2017",
     "key_reference": "RhesusBase; McGowan EC et al., Vox Sanguinis 2017, \"Diverse and novel RHD variants in Australian blood donors with a weak D phenotype\" (PMID 28220510; doi 10.1111/vox.12488) Allele designations: RHD*c.939+3A>C DOI: 10.1111/vox.12488",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/28220510/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3949,7 +3949,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2012",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/25808592/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -3987,7 +3987,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2012",
     "key_reference": "Pereira J, Rodrigues MJ, Chabert T, Ribeiro ML. Novel human pathological mutations. Gene symbol: RHD. Disease: reduced expression (weak D). Thongbut et al. 2019 (minigene; 1/129 weak D donors) PMID 32110194; Dall'Osso et al., Haematologica (conflicting minigene); RHeference RHef00616",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/32110194/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -4025,7 +4025,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2007",
     "key_reference": "Fichou et al. 2015",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/25808592/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -4139,7 +4139,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2017",
     "key_reference": "El Wafi et al. 2017 PMID: 28960314",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/28960314/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -4215,7 +4215,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2017",
     "key_reference": "El Wafi et al. 2017 PMID: 28960314",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/28960314/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -4253,7 +4253,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2017",
     "key_reference": "El Wafi et al. 2017 PMID: 28960314",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/28960314/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": ""
   },
   {
@@ -4329,7 +4329,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2017",
     "key_reference": "El Wafi et al. 2017 PMID: 28960314",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/28960314/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": ""
   },
   {
@@ -4405,7 +4405,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2017",
     "key_reference": "El Wafi et al. 2017 PMID: 28960314",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/28960314/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": ""
   },
   {
@@ -4443,7 +4443,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2017",
     "key_reference": "El Wafi et al. 2017 PMID: 28960314",
     "pubmed_source_url": "https://pubmed.ncbi.nlm.nih.gov/28960314/",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": ""
   },
   {
@@ -4481,7 +4481,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2008",
     "key_reference": "Shao CP, Maas JH, Su YQ, Kohler M, Legler TJ. Molecular background of Rh D-positive, D-negative, Del and weak D phenotypes in Chinese. Vox Sang. 2002;83(2):156-161. doi:10.1046/j.1423-0410.2002.00192.x (Table 2, allele \"RHD 1227A IVS7+152A\", GenBank AF390110/AF390111, 1 Del individual); Ye SH, Li DZ, Li BC, Liu Y, Zhang W, Wang HT, Yang Y, Han S, Zhang JJ. A comprehensive investigation of RHD polymorphisms in the Chinese Han population in Xi'an. Blood Transfus. 2014;12(3):396-404. doi:10.2450/2013.0121-13 (allele 19, RHD*DEL1 1227A + IVS7+152A)",
     "pubmed_source_url": "https://doi.org/10.1046/j.1423-0410.2002.00192.x",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25306881-C-A?dataset=gnomad_r4"
   },
   {
@@ -4519,7 +4519,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2010",
     "key_reference": "RhesusBase",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": null
   },
   {
@@ -4557,7 +4557,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2008",
     "key_reference": "Rui et al. 2023, Vox Sanguinis 118:337-338 (DOI 10.1111/vox.13412) Allele designations: RHD*01EL.37 DOI: 10.1111/vox.13412",
     "pubmed_source_url": "https://onlinelibrary.wiley.com/doi/10.1111/vox.13412",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25321858-T-C?dataset=gnomad_r4"
   },
   {
@@ -4633,7 +4633,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2003",
     "key_reference": "Rodrigues et al. 2024",
     "pubmed_source_url": "https://aob.amegroups.org/article/view/9356/html",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25329017-A-G?dataset=gnomad_r4"
   },
   {
@@ -4671,7 +4671,7 @@ window.VARIANT_DATA = [
     "first_report_year": "2012",
     "key_reference": "RhesusBase",
     "pubmed_source_url": "http://www.rhesusbase.info",
-    "audit_status": "LIKELY VALID",
+    "audit_status": "VERIFIED",
     "gnomad_url": ""
   },
   {
