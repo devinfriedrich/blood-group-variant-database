@@ -1,0 +1,37 @@
+# Netlify deployment config.
+#
+# The site is plain HTML, CSS and JavaScript with no dependencies, so the
+# "build" only assembles the files a visitor needs into _site/. The repository
+# root is NOT published directly, because it contains data/variants_raw.json,
+# which holds the blood group systems that are deliberately withheld from the
+# published scope. See scripts/build_site.py.
+
+[build]
+  command = "python3 scripts/build_site.py"
+  publish = "_site"
+
+[build.environment]
+  PYTHON_VERSION = "3.10"
+
+# Deploy previews for pull requests are useful for review, but they should not
+# be indexed or treated as the real site.
+[context.deploy-preview]
+  command = "python3 scripts/build_site.py"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# The data files are downloads, not pages.
+[[headers]]
+  for = "/data/variants.csv"
+  [headers.values]
+    Content-Type = "text/csv; charset=utf-8"
+
+[[headers]]
+  for = "/data/variants.json"
+  [headers.values]
+    Content-Type = "application/json; charset=utf-8"

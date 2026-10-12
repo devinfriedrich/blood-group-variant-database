@@ -9,3 +9,6 @@ demo/
 # Python bytecode cache from running the scripts/ helpers.
 __pycache__/
 *.pyc
+
+# Assembled by scripts/build_site.py for deployment
+_site/
