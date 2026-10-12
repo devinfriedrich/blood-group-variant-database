@@ -32,6 +32,8 @@ MD, PhD**.
   legends, base-editing feasibility methodology, disclaimer.
 - `about.html`: what this resource is for, who maintains it, contact.
 - `changelog.html`: dated log of data corrections and site changes
+- `feedback.html`: feedback form; submissions are delivered by formsubmit.co,
+  a third-party form service, to the address in the form's `action` attribute
   (linked from the top nav and footer on every page).
 
 **Code & data**

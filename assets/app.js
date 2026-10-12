@@ -294,6 +294,17 @@
   }
 
   /* ---------------- browser state / render ---------------- */
+  // The full placeholder does not fit on the narrowest phones.
+  function initPlaceholder() {
+    var input = document.getElementById("q");
+    if (!input || !input.dataset.shortPlaceholder) return;
+    var full = input.placeholder, short = input.dataset.shortPlaceholder;
+    var mq = window.matchMedia("(max-width: 380px)");
+    var apply = function () { input.placeholder = mq.matches ? short : full; };
+    apply();
+    if (mq.addEventListener) mq.addEventListener("change", apply);
+  }
+
   function initBrowser() {
     var table = document.getElementById("variant-tbody");
     if (!table) return; // not on a page with the browser
@@ -469,7 +480,7 @@
     var drawerTitle = document.getElementById("drawer-title");
     var drawerSub = document.getElementById("drawer-sub");
 
-    var lastFocus = null;
+    var lastFocus = null, scrollLockY = 0;
     drawer.setAttribute("aria-hidden", "true");
     drawer.setAttribute("inert", "");
 
@@ -543,6 +554,11 @@
         '<div class="field-group"><h4>Cite This Entry</h4><div class="cite-box">' + esc(citeText) + '</div></div>';
 
       lastFocus = document.activeElement;
+      // Lock the page behind the drawer so closing it returns you to the same row.
+      scrollLockY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = -scrollLockY + "px";
+      document.body.style.width = "100%";
       drawer.removeAttribute("aria-hidden");
       drawer.removeAttribute("inert");
       overlay.classList.add("is-open");
@@ -556,7 +572,11 @@
       drawer.classList.remove("is-open");
       drawer.setAttribute("aria-hidden", "true");
       drawer.setAttribute("inert", "");
-      if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      window.scrollTo(0, scrollLockY);
+      if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
       lastFocus = null;
     }
 
@@ -768,6 +788,7 @@
     initTheme();
     initHero();
     initBrowser();
+    initPlaceholder();
     initStats();
     initCopyButtons();
     initFileDownloads();

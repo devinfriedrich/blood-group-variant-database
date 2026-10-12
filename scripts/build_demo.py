@@ -13,7 +13,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ["index", "stats", "methods", "download-cite", "about", "changelog"]
+PAGES = ["index", "stats", "methods", "download-cite", "about", "changelog", "feedback"]
 OUT_DIR = ROOT / "demo"
 OUT_DIR.mkdir(exist_ok=True)
 
@@ -46,6 +46,14 @@ for page in PAGES:
     page_body = text[body_start:body_end]
     # Drop the drawer markup from the page body if present (it's hoisted once, globally)
     page_body = re.sub(r'<div class="drawer-overlay".*?</aside>', "", page_body, flags=re.DOTALL)
+    if page == "feedback":
+        # The preview sandbox blocks the third-party form post, so the form would
+        # fail silently there. Replace it with a note; the real site is unaffected.
+        import re as _re
+        page_body = _re.sub(r'<form id="feedback-form".*?</form>',
+            '<p class="demo-note">The feedback form is disabled in this preview. It works on the full site.</p>',
+            page_body, flags=_re.DOTALL)
+
     if page == "download-cite":
         # The shared preview is viewed inside a sandbox that never allows file downloads,
         # so a download button there would silently do nothing. Say so instead.

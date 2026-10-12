@@ -338,7 +338,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "C at pos 7 \u2192 additional C\u2192T bystander edit at chr1:25272532",
     "first_report_year": "2012",
     "key_reference": "RhesusBase",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25272538-C-T?dataset=gnomad_r4"
   },
@@ -566,7 +566,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "N/A",
     "first_report_year": "2008",
     "key_reference": "Fichou et al. 2015",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": null
   },
@@ -718,7 +718,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "Unknown: sequence lookup needed",
     "first_report_year": "2012",
     "key_reference": "Fichou et al. 2015",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25301687-G-A?dataset=gnomad_r4"
   },
@@ -832,7 +832,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "N/A",
     "first_report_year": "2013",
     "key_reference": "Fichou et al. 2015",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": null
   },
@@ -1022,7 +1022,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "Unknown: sequence lookup needed",
     "first_report_year": "2001",
     "key_reference": "Fichou et al. 2015",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": null
   },
@@ -1098,7 +1098,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "Unknown: sequence lookup needed",
     "first_report_year": "2007",
     "key_reference": "Fichou et al. 2015",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": null
   },
@@ -1136,7 +1136,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "Unknown: sequence lookup needed",
     "first_report_year": "2011",
     "key_reference": "Fichou et al. 2015",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25290639-A-G?dataset=gnomad_r4"
   },
@@ -1212,7 +1212,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "Unknown: sequence lookup needed",
     "first_report_year": "2010",
     "key_reference": "Fichou et al. 2015",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": null
   },
@@ -1364,7 +1364,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "N/A",
     "first_report_year": "2011",
     "key_reference": "Fichou et al. 2015",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": null
   },
@@ -1706,7 +1706,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "N/A",
     "first_report_year": "2010",
     "key_reference": "Fichou et al. 2015 Allele designations: RHD*01EL.14",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": null
   },
@@ -2390,7 +2390,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "Unknown: sequence lookup needed",
     "first_report_year": "2010",
     "key_reference": "RhesusBase",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": null
   },
@@ -2542,7 +2542,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "N/A",
     "first_report_year": "2012",
     "key_reference": "RhesusBase",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "VERIFIED",
     "gnomad_url": ""
   },
@@ -2580,7 +2580,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "N/A",
     "first_report_year": "2012",
     "key_reference": "RhesusBase",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "FLAGGED: manual review",
     "gnomad_url": ""
   },
@@ -2618,7 +2618,7 @@ window.VARIANT_DATA = [
     "bystander_edits": "N/A",
     "first_report_year": "2012",
     "key_reference": "RhesusBase",
-    "pubmed_source_url": "http://www.rhesusbase.info",
+    "pubmed_source_url": "https://www.rhesusbase.info",
     "audit_status": "FLAGGED: manual review",
     "gnomad_url": ""
   },
