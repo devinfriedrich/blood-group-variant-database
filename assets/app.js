@@ -590,9 +590,15 @@
         drawer.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'),
         function (el) { return el.offsetParent !== null; });
       if (!items.length) { e.preventDefault(); drawer.focus(); return; }
-      var first = items[0], last = items[items.length - 1];
-      if (e.shiftKey && (document.activeElement === first || document.activeElement === drawer)) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      // Safari will not keep focus inside the drawer on its own, so every Tab
+      // is handled here and the next control is chosen explicitly. Engines then
+      // behave the same, instead of Chromium happening to get it right.
+      e.preventDefault();
+      var active = document.activeElement;
+      var at = items.indexOf(active);
+      if (at === -1) { (e.shiftKey ? items[items.length - 1] : items[0]).focus(); return; }
+      var next = (at + (e.shiftKey ? -1 : 1) + items.length) % items.length;
+      items[next].focus();
     });
 
     render();

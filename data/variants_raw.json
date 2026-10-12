@@ -4554,7 +4554,7 @@
         "bystander_edits": "N/A",
         "first_report_year": "2019",
         "key_reference": "RHeference RHef00769 (GenBank-confirmed US case); Wagner F. et al. Results of more than ten years testing of RhD negative first time donors by RHD PCR. Transfus Med Hemother 2019 (abstract cited by RHeference; relevance to this case unclear)",
-        "pubmed_source_url": "http://rheference.org/allele/RHef00769",
+        "pubmed_source_url": "https://rheference.org/allele/RHef00769",
         "audit_status": "",
         "gnomad_url": "https://gnomad.broadinstitute.org/variant/1-25306593-C-T?dataset=gnomad_r4",
         "_antigen": "RHD"
